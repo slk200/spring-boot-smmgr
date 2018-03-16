@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/smmgr")
+@RequestMapping(path = "/smmgr")
 public class LocationController {
 
-    @GetMapping("/location")
+    @GetMapping(path = "/location")
     public String location() {
         return "map";
     }

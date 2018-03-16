@@ -1,32 +1,51 @@
 package org.tizzer.smmgr.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-public class Employee {
-    @Id
+public class Employee implements Serializable {
     //员工号
-    private String account;
+    @Id
+    @Column(name = "staff_no")
+    private String staffNo;
+
     //密码
+    @Column(nullable = false)
     private String password;
+
     //联系电话
+    @Column(nullable = false)
     private String phone;
+
     //联系地址
+    @Column(nullable = false)
     private String address;
-    //注册时间
-    private Long createAt;
+
     //是否为管理员
-    private Boolean admin;
+    @Column(name = "is_admin", nullable = false)
+    private Boolean isAdmin;
 
-    private Boolean login;
+    //注册时间
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createAt;
 
-    public String getAccount() {
-        return account;
+    //所属门店
+    @ManyToOne
+    @JoinColumn(name = "shop_id", referencedColumnName = "id")
+    private Shop shop;
+
+    public String getStaffNo() {
+        return staffNo;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setStaffNo(String staffNo) {
+        this.staffNo = staffNo;
     }
 
     public String getPassword() {
@@ -53,27 +72,27 @@ public class Employee {
         this.address = address;
     }
 
-    public Long getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(Long createAt) {
-        this.createAt = createAt;
-    }
-
     public Boolean getAdmin() {
-        return admin;
+        return isAdmin;
     }
 
     public void setAdmin(Boolean admin) {
-        this.admin = admin;
+        isAdmin = admin;
     }
 
-    public Boolean getLogin() {
-        return login;
+    public Date getCreateAt() {
+        return createAt;
     }
 
-    public void setLogin(Boolean login) {
-        this.login = login;
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 }

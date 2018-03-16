@@ -1,17 +1,25 @@
 package org.tizzer.smmgr.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
-public class VipType {
+@Entity
+public class InsiderType implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     //类型名称
+    @Column(nullable = false)
     private String name;
+
     //折扣
+    @Column(nullable = false)
     private Float discount;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insiderType")
+    private List<Insider> insiders;
 
     public Integer getId() {
         return id;

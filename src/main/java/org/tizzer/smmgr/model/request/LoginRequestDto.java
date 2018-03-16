@@ -1,15 +1,15 @@
 package org.tizzer.smmgr.model.request;
 
 public class LoginRequestDto {
-    private String account;
+    private String staffNo;
     private String password;
 
-    public String getAccount() {
-        return account;
+    public String getStaffNo() {
+        return staffNo;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setStaffNo(String staffNo) {
+        this.staffNo = staffNo;
     }
 
     public String getPassword() {

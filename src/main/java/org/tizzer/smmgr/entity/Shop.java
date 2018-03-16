@@ -1,21 +1,23 @@
 package org.tizzer.smmgr.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class GoodsType implements Serializable {
+public class Shop {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //名称
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "goodsType")
-    private List<Goods> goods;
+    @Column(nullable = false)
+    private String address;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shop")
+    private List<Employee> employees;
 
     public Long getId() {
         return id;
@@ -31,5 +33,13 @@ public class GoodsType implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

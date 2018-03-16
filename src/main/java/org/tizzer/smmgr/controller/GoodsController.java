@@ -21,12 +21,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/smmgr")
+@RequestMapping(path = "/smmgr")
 public class GoodsController {
-    @Autowired
-    GoodsRepository goodsRepository;
 
-    @PostMapping("/queryGoods")
+    private final GoodsRepository goodsRepository;
+
+    @Autowired
+    public GoodsController(GoodsRepository goodsRepository) {
+        this.goodsRepository = goodsRepository;
+    }
+
+    @PostMapping(path = "/queryGoods")
     public ResultListResponse<QueryGoodsResponseDto> getSatisfy(QueryGoodsRequestDto queryGoodsRequestDto) {
         ResultListResponse<QueryGoodsResponseDto> res = new ResultListResponse<>();
         try {
@@ -41,13 +46,13 @@ public class GoodsController {
                     return null;
                 }
             };
-            Page<Goods> people = goodsRepository.findAll(spec, pageable);
-            Long total = people.getTotalElements();
-            for (Goods goods : people.getContent()) {
+            Page<Goods> goodsPage = goodsRepository.findAll(spec, pageable);
+            Long total = goodsPage.getTotalElements();
+            for (Goods goods : goodsPage.getContent()) {
                 QueryGoodsResponseDto queryGoodsResponseDto = new QueryGoodsResponseDto();
                 queryGoodsResponseDto.setUpc(goods.getUpc());
                 queryGoodsResponseDto.setName(goods.getName());
-                queryGoodsResponseDto.setType(goods.getTypeId());
+                queryGoodsResponseDto.setType(goods.getGoodsType().getName());
                 queryGoodsResponseDto.setoPrice(goods.getjPrice());
                 queryGoodsResponseDto.setsPrice(goods.getsPrice());
                 queryGoodsResponseDto.setInventory(goods.getInventory());

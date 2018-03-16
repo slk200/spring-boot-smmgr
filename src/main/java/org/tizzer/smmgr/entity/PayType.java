@@ -5,23 +5,23 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class GoodsType implements Serializable {
+public class PayType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
-    //名称
+    //支付方式
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "goodsType")
-    private List<Goods> goods;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "payType")
+    private List<TradeRecord> tradeRecords;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

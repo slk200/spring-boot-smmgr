@@ -1,30 +1,57 @@
 package org.tizzer.smmgr.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-public class Goods {
-    @Id
+public class Goods implements Serializable {
     //条形码
+    @Id
     private String upc;
+
     //名称
+    @Column(nullable = false)
     private String name;
+
     //拼音码
+    @Column(nullable = false)
     private String spell;
-    //种类id
-    private Integer typeId;
+
     //采购价
+    @Column(name = "j_price", nullable = false, scale = 2)
     private Double jPrice;
+
     //零售价
+    @Column(name = "s_price", nullable = false, scale = 2)
     private Double sPrice;
+
     //库存
+    @Column(nullable = false)
     private Long inventory;
+
     //生产日期
+    @Column(name = "sc_date", nullable = false)
+    @Temporal(value = TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date scDate;
+
     //截至日期
+    @Column(name = "jz_date", nullable = false)
+    @Temporal(value = TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date jzDate;
+
+    //种类id
+    @ManyToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    private GoodsType goodsType;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "goods")
+    private List<TradeSpec> tradeSpecs;
 
     public String getUpc() {
         return upc;
@@ -48,14 +75,6 @@ public class Goods {
 
     public void setSpell(String spell) {
         this.spell = spell;
-    }
-
-    public Integer getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
     }
 
     public Double getjPrice() {
@@ -96,5 +115,13 @@ public class Goods {
 
     public void setJzDate(Date jzDate) {
         this.jzDate = jzDate;
+    }
+
+    public GoodsType getGoodsType() {
+        return goodsType;
+    }
+
+    public void setGoodsType(GoodsType goodsType) {
+        this.goodsType = goodsType;
     }
 }

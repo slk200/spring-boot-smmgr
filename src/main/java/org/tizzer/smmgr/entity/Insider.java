@@ -1,28 +1,42 @@
 package org.tizzer.smmgr.entity;
 
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Vip {
-    @Id
+@Entity
+public class Insider implements Serializable {
     //会员卡号
+    @Id
     private String cardNo;
+
     //密码
     private String password;
-    //会员类型
-    private Integer type;
+
     //会员姓名
+    @Column(nullable = false)
     private String name;
+
     //联系电话
+    @Column(nullable = false)
     private String phone;
+
     //生日
-    private Date csDate;
+    private Date birth;
+
     //余额
     private Double balance;
+
     //联系地址
     private String address;
+
     //备注
     private String note;
+
+    //会员类型id
+    @ManyToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    private InsiderType insiderType;
 
     public String getCardNo() {
         return cardNo;
@@ -38,14 +52,6 @@ public class Vip {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 
     public String getName() {
@@ -64,12 +70,12 @@ public class Vip {
         this.phone = phone;
     }
 
-    public Date getCsDate() {
-        return csDate;
+    public Date getBirth() {
+        return birth;
     }
 
-    public void setCsDate(Date csDate) {
-        this.csDate = csDate;
+    public void setBirth(Date birth) {
+        this.birth = birth;
     }
 
     public Double getBalance() {
@@ -94,5 +100,13 @@ public class Vip {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public InsiderType getInsiderType() {
+        return insiderType;
+    }
+
+    public void setInsiderType(InsiderType insiderType) {
+        this.insiderType = insiderType;
     }
 }
