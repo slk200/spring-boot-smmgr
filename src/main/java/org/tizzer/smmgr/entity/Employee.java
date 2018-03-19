@@ -29,6 +29,9 @@ public class Employee implements Serializable {
     @Column(name = "is_admin", nullable = false)
     private Boolean isAdmin;
 
+    @Column(name = "is_enable", nullable = false)
+    private Boolean isEnable;
+
     //注册时间
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -37,8 +40,8 @@ public class Employee implements Serializable {
 
     //所属门店
     @ManyToOne
-    @JoinColumn(name = "shop_id", referencedColumnName = "id")
-    private Shop shop;
+    @JoinColumn(name = "store_id", referencedColumnName = "id")
+    private Store store;
 
     public String getStaffNo() {
         return staffNo;
@@ -72,7 +75,7 @@ public class Employee implements Serializable {
         this.address = address;
     }
 
-    public Boolean getAdmin() {
+    public Boolean isAdmin() {
         return isAdmin;
     }
 
@@ -88,11 +91,23 @@ public class Employee implements Serializable {
         this.createAt = createAt;
     }
 
-    public Shop getShop() {
-        return shop;
+    public Store getStore() {
+        return store;
     }
 
-    public void setShop(Shop shop) {
-        this.shop = shop;
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public Boolean getEnable() {
+        return isEnable;
+    }
+
+    public void setEnable(Boolean enable) {
+        isEnable = enable;
     }
 }

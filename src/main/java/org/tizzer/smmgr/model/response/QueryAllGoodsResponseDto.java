@@ -1,6 +1,6 @@
 package org.tizzer.smmgr.model.response;
 
-public class QueryGoodsResponseDto extends ResultListResponse {
+public class QueryAllGoodsResponseDto {
     private String upc;
     private String name;
     private String type;
@@ -54,5 +54,17 @@ public class QueryGoodsResponseDto extends ResultListResponse {
 
     public void setInventory(Long inventory) {
         this.inventory = inventory;
+    }
+
+    @Override
+    public String toString() {
+        return "QueryAllGoodsResponseDto{" +
+                "upc='" + upc + '\'' +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", oPrice=" + oPrice +
+                ", sPrice=" + sPrice +
+                ", inventory=" + inventory +
+                '}';
     }
 }

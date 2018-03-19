@@ -6,20 +6,20 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "resultResponse", description = "返回对象")
 public class ResultResponse {
     @ApiModelProperty(value = "状态码")
-    private int code;
+    private Integer code;
     @ApiModelProperty(value = "响应信息")
     private String message;
 
-    public int getCode() {
+    public Integer getCode() {
         return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
     public String getMessage() {
         return message;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
     }
 
     public void setMessage(String message) {

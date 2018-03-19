@@ -1,13 +1,13 @@
 package org.tizzer.smmgr.model.response;
 
 public class LoginResponseDto extends ResultResponse {
-    private boolean admin;
+    private Boolean admin;
 
-    public boolean isAdmin() {
+    public Boolean isAdmin() {
         return admin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setAdmin(Boolean admin) {
         this.admin = admin;
     }
 }

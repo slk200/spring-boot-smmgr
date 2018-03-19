@@ -13,6 +13,8 @@ buildNumber.properties
 
 #IDEA Spring Boot Project Custom
 mvnw
+*.json
+*.http
 *.iml
 *.cmd
 /.mvn/*

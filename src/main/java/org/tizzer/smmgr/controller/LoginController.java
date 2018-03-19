@@ -29,7 +29,7 @@ public class LoginController {
         try {
             Employee employee = employeeRepository.findByStaffNoAndPassword(loginRequestDto.getStaffNo(), loginRequestDto.getPassword());
             if (employee != null) {
-                loginResponseDto.setAdmin(employee.getAdmin());
+                loginResponseDto.setAdmin(employee.isAdmin());
                 loginResponseDto.setCode(ResultCode.OK);
             } else {
                 loginResponseDto.setMessage("账号或密码错误");

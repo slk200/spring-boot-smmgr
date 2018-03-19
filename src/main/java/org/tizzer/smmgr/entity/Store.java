@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Shop {
+public class Store {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,7 +16,7 @@ public class Shop {
     @Column(nullable = false)
     private String address;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shop")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "store")
     private List<Employee> employees;
 
     public Long getId() {

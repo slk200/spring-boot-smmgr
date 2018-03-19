@@ -109,6 +109,14 @@ public class Goods implements Serializable {
         this.scDate = scDate;
     }
 
+    public List<TradeSpec> getTradeSpecs() {
+        return tradeSpecs;
+    }
+
+    public void setTradeSpecs(List<TradeSpec> tradeSpecs) {
+        this.tradeSpecs = tradeSpecs;
+    }
+
     public Date getJzDate() {
         return jzDate;
     }
