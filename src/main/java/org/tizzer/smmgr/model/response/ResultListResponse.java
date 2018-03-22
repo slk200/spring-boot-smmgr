@@ -3,18 +3,17 @@ package org.tizzer.smmgr.model.response;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultListResponse<Entity> extends ResultResponse {
-    private List<Entity> data = new ArrayList<>();
+public class ResultListResponse<T> extends ResultResponse {
+    private List<T> data = new ArrayList<>();
     private Integer pageCount;
     private Integer currentPage;
-    private Long total;
 
-    public List<Entity> getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(Entity data) {
-        this.data.add(data);
+    public void setData(T t) {
+        this.data.add(t);
     }
 
     public Integer getPageCount() {
@@ -33,11 +32,4 @@ public class ResultListResponse<Entity> extends ResultResponse {
         this.currentPage = currentPage;
     }
 
-    public Long getTotal() {
-        return total;
-    }
-
-    public void setTotal(Long total) {
-        this.total = total;
-    }
 }

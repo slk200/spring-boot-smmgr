@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SmmgrApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SmmgrApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SmmgrApplication.class, args);
+    }
 }

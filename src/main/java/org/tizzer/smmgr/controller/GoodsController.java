@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,30 +18,21 @@ import org.tizzer.smmgr.repository.GoodsRepository;
 @RequestMapping(path = "/smmgr")
 public class GoodsController {
 
-    private final GoodsRepository goodsRepository;
-
     @Autowired
-    public GoodsController(GoodsRepository goodsRepository) {
-        this.goodsRepository = goodsRepository;
-    }
+    GoodsRepository goodsRepository;
 
+    /**
+     * 查询全部商品
+     *
+     * @param queryAllGoodsRequestDto
+     * @return
+     */
     @PostMapping(path = "/queryallgoods")
     public ResultListResponse<QueryAllGoodsResponseDto> getSatisfy(QueryAllGoodsRequestDto queryAllGoodsRequestDto) {
         ResultListResponse<QueryAllGoodsResponseDto> res = new ResultListResponse<>();
         try {
             Pageable pageable = new PageRequest(queryAllGoodsRequestDto.getCurrentPage(), queryAllGoodsRequestDto.getPageSize());
-//            Specification<Goods> specification = new Specification<Goods>() {
-//                @Override
-//                public Predicate toPredicate(Root<Goods> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-//                    List<Predicate> predicates = new ArrayList<>();
-//                    predicates.add(criteriaBuilder.like(root.get("upc"), "%" + queryAllGoodsRequestDto.getKeyword() + "%"));
-//                    predicates.add(criteriaBuilder.like(root.get("name"), "%" + queryAllGoodsRequestDto.getKeyword() + "%"));
-//                    criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[predicates.size()])));
-//                    return null;
-//                }
-//            };
-            Page<Goods> page = goodsRepository.findAll((Specification<Goods>) null, pageable);
-            Long total = page.getTotalElements();
+            Page<Goods> page = goodsRepository.findAll(pageable);
             for (Goods goods : page.getContent()) {
                 QueryAllGoodsResponseDto queryAllGoodsResponseDto = new QueryAllGoodsResponseDto();
                 queryAllGoodsResponseDto.setUpc(goods.getUpc());
@@ -55,7 +45,6 @@ public class GoodsController {
             }
             res.setCurrentPage(queryAllGoodsRequestDto.getCurrentPage());
             res.setPageCount(page.getTotalPages());
-            res.setTotal(total);
             res.setCode(ResultCode.OK);
         } catch (Exception e) {
             res.setMessage(e.getMessage());

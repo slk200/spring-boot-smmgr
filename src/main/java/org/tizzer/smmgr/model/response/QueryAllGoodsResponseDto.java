@@ -55,16 +55,4 @@ public class QueryAllGoodsResponseDto {
     public void setInventory(Long inventory) {
         this.inventory = inventory;
     }
-
-    @Override
-    public String toString() {
-        return "QueryAllGoodsResponseDto{" +
-                "upc='" + upc + '\'' +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", oPrice=" + oPrice +
-                ", sPrice=" + sPrice +
-                ", inventory=" + inventory +
-                '}';
-    }
 }

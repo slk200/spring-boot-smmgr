@@ -2,14 +2,13 @@ package org.tizzer.smmgr.model.response;
 
 import java.util.Date;
 
-public class QueryAllStoreResponseDto {
+public class QueryOneStoreResponseDto extends ResultResponse {
     private Long id;
     private String name;
     private String address;
     private Date foundDate;
 
     public Long getId() {
-
         return id;
     }
 

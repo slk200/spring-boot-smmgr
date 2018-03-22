@@ -1,7 +1,5 @@
 package org.tizzer.smmgr.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -36,13 +34,11 @@ public class Goods implements Serializable {
     //生产日期
     @Column(name = "sc_date", nullable = false)
     @Temporal(value = TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date scDate;
 
     //截至日期
     @Column(name = "jz_date", nullable = false)
     @Temporal(value = TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date jzDate;
 
     //种类id
@@ -107,14 +103,6 @@ public class Goods implements Serializable {
 
     public void setScDate(Date scDate) {
         this.scDate = scDate;
-    }
-
-    public List<TradeSpec> getTradeSpecs() {
-        return tradeSpecs;
-    }
-
-    public void setTradeSpecs(List<TradeSpec> tradeSpecs) {
-        this.tradeSpecs = tradeSpecs;
     }
 
     public Date getJzDate() {

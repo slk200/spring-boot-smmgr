@@ -17,5 +17,6 @@ mvnw
 *.http
 *.iml
 *.cmd
-/.mvn/*
-/.idea/*
+.mvn
+.idea
+src/test

@@ -1,13 +1,21 @@
 package org.tizzer.smmgr.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.tizzer.smmgr.entity.Employee;
 
-public interface EmployeeRepository extends JpaRepository<Employee, String> {
+import javax.transaction.Transactional;
 
-    @Query("from Employee e where e.staffNo=:staffNo and e.password=:password")
-    Employee findByStaffNoAndPassword(@Param("staffNo") String staffNo, @Param("password") String password);
+public interface EmployeeRepository extends JpaRepository<Employee, String>, JpaSpecificationExecutor<Employee> {
+
+    Employee findByStaffNoAndPassword(String staffNo, String password);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Employee e SET e.phone=:phone,e.address=:address,e.is_admin=:admin,e.is_enable=:enable WHERE e.staff_no=:staffNo", nativeQuery = true)
+    void updateEmployee(@Param("staffNo") String staffNo, @Param("phone") String phone, @Param("address") String address, @Param("admin") boolean admin, @Param("enable") boolean enable);
 
 }

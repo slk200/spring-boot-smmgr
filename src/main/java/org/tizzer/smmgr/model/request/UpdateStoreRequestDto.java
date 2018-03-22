@@ -1,15 +1,11 @@
-package org.tizzer.smmgr.model.response;
+package org.tizzer.smmgr.model.request;
 
-import java.util.Date;
-
-public class QueryAllStoreResponseDto {
+public class UpdateStoreRequestDto {
     private Long id;
     private String name;
     private String address;
-    private Date foundDate;
 
     public Long getId() {
-
         return id;
     }
 
@@ -33,11 +29,4 @@ public class QueryAllStoreResponseDto {
         this.address = address;
     }
 
-    public Date getFoundDate() {
-        return foundDate;
-    }
-
-    public void setFoundDate(Date foundDate) {
-        this.foundDate = foundDate;
-    }
 }

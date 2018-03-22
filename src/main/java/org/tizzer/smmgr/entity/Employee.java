@@ -1,7 +1,5 @@
 package org.tizzer.smmgr.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -16,6 +14,10 @@ public class Employee implements Serializable {
     //密码
     @Column(nullable = false)
     private String password;
+
+    //姓名
+    @Column(nullable = false)
+    private String name;
 
     //联系电话
     @Column(nullable = false)
@@ -35,7 +37,6 @@ public class Employee implements Serializable {
     //注册时间
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createAt;
 
     //所属门店
@@ -59,6 +60,14 @@ public class Employee implements Serializable {
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -73,14 +82,6 @@ public class Employee implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public Boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(Boolean admin) {
-        isAdmin = admin;
     }
 
     public Date getCreateAt() {
@@ -101,6 +102,10 @@ public class Employee implements Serializable {
 
     public Boolean getAdmin() {
         return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 
     public Boolean getEnable() {

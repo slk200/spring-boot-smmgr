@@ -1,44 +1,16 @@
-package org.tizzer.smmgr.entity;
+package org.tizzer.smmgr.model.request;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-public class Insider implements Serializable {
-    //会员卡号
-    @Id
+public class SaveInsiderRequestDto {
     private String cardNo;
-
-    //密码
     private String password;
-
-    //会员姓名
-    @Column(nullable = false)
     private String name;
-
-    //联系电话
-    @Column(nullable = false)
     private String phone;
-
-    //生日
-    @Temporal(TemporalType.DATE)
-    private Date birth;
-
-    //联系地址
     private String address;
-
-    //备注
     private String note;
-
-    //录入时间
-    @Column(nullable = false)
-    private Date createAt;
-
-    //会员类型id
-    @ManyToOne
-    @JoinColumn(name = "type_id", referencedColumnName = "id")
-    private InsiderType insiderType;
+    private Integer type;
+    private Date birth;
 
     public String getCardNo() {
         return cardNo;
@@ -72,14 +44,6 @@ public class Insider implements Serializable {
         this.phone = phone;
     }
 
-    public Date getBirth() {
-        return birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -96,19 +60,19 @@ public class Insider implements Serializable {
         this.note = note;
     }
 
-    public Date getCreateAt() {
-        return createAt;
+    public Integer getType() {
+        return type;
     }
 
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
-    public InsiderType getInsiderType() {
-        return insiderType;
+    public Date getBirth() {
+        return birth;
     }
 
-    public void setInsiderType(InsiderType insiderType) {
-        this.insiderType = insiderType;
+    public void setBirth(Date birth) {
+        this.birth = birth;
     }
 }

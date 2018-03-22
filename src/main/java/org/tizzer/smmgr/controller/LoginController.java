@@ -16,21 +16,29 @@ import org.tizzer.smmgr.repository.EmployeeRepository;
 @RequestMapping(path = "/smmgr")
 public class LoginController {
 
-    private final EmployeeRepository employeeRepository;
-
     @Autowired
-    public LoginController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
+    EmployeeRepository employeeRepository;
 
+    /**
+     * 登录校验
+     *
+     * @param loginRequestDto
+     * @return
+     */
     @PostMapping(path = "/login")
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         LoginResponseDto loginResponseDto = new LoginResponseDto();
         try {
             Employee employee = employeeRepository.findByStaffNoAndPassword(loginRequestDto.getStaffNo(), loginRequestDto.getPassword());
             if (employee != null) {
-                loginResponseDto.setAdmin(employee.isAdmin());
-                loginResponseDto.setCode(ResultCode.OK);
+                if (employee.getEnable()) {
+                    loginResponseDto.setStoreId(employee.getStore().getId());
+                    loginResponseDto.setAdmin(employee.getAdmin());
+                    loginResponseDto.setCode(ResultCode.OK);
+                } else {
+                    loginResponseDto.setMessage("账户已停用");
+                    loginResponseDto.setCode(ResultCode.ERROR);
+                }
             } else {
                 loginResponseDto.setMessage("账号或密码错误");
                 loginResponseDto.setCode(ResultCode.ERROR);

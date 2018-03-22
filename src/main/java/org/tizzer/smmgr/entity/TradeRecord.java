@@ -1,7 +1,5 @@
 package org.tizzer.smmgr.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -29,7 +27,6 @@ public class TradeRecord implements Serializable {
     //出售时间
     @Column(name = "sold_time", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date soldTime;
 
     //支付方式

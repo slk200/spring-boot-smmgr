@@ -1,6 +1,7 @@
 package org.tizzer.smmgr.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,6 +17,10 @@ public class Store {
     @Column(nullable = false)
     private String address;
 
+    @Column(name = "found_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date foundDate;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "store")
     private List<Employee> employees;
 
@@ -27,8 +32,17 @@ public class Store {
         this.id = id;
     }
 
+    public Date getFoundDate() {
+        return foundDate;
+    }
+
+    public void setFoundDate(Date foundDate) {
+        this.foundDate = foundDate;
+    }
+
     public String getName() {
         return name;
+
     }
 
     public void setName(String name) {

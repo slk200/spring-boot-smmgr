@@ -1,25 +1,9 @@
-package org.tizzer.smmgr.entity;
+package org.tizzer.smmgr.model.request;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
-
-@Entity
-public class InsiderType implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class UpdateInsiderTypeRequestDto {
     private Integer id;
-
-    //类型名称
-    @Column(nullable = false)
     private String name;
-
-    //折扣
-    @Column(nullable = false)
     private Integer discount;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insiderType")
-    private List<Insider> insiders;
 
     public Integer getId() {
         return id;
@@ -44,4 +28,5 @@ public class InsiderType implements Serializable {
     public void setDiscount(Integer discount) {
         this.discount = discount;
     }
+
 }

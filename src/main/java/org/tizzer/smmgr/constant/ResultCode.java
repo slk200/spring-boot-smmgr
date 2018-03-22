@@ -1,6 +1,6 @@
 package org.tizzer.smmgr.constant;
 
 public interface ResultCode {
-    int OK = 0;
-    int ERROR = 1;
+    int OK = 1;
+    int ERROR = 2;
 }
