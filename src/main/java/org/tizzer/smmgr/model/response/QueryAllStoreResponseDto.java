@@ -3,17 +3,16 @@ package org.tizzer.smmgr.model.response;
 import java.util.Date;
 
 public class QueryAllStoreResponseDto {
-    private Long id;
+    private Integer id;
     private String name;
     private String address;
     private Date foundDate;
 
-    public Long getId() {
-
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

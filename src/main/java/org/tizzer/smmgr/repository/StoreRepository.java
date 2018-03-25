@@ -9,7 +9,7 @@ import org.tizzer.smmgr.entity.Store;
 
 import javax.transaction.Transactional;
 
-public interface StoreRepository extends JpaRepository<Store, Long>, JpaSpecificationExecutor<Store> {
+public interface StoreRepository extends JpaRepository<Store, Integer>, JpaSpecificationExecutor<Store> {
 
     @Modifying
     @Transactional

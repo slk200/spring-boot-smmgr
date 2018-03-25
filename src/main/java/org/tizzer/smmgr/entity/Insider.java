@@ -3,15 +3,14 @@ package org.tizzer.smmgr.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Insider implements Serializable {
     //会员卡号
     @Id
+    @Column(name = "card_no")
     private String cardNo;
-
-    //密码
-    private String password;
 
     //会员姓名
     @Column(nullable = false)
@@ -32,7 +31,7 @@ public class Insider implements Serializable {
     private String note;
 
     //录入时间
-    @Column(nullable = false)
+    @Column(name = "create_at", nullable = false)
     private Date createAt;
 
     //会员类型id
@@ -40,20 +39,15 @@ public class Insider implements Serializable {
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private InsiderType insiderType;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insider")
+    List<TradeRecord> tradeRecords;
+
     public String getCardNo() {
         return cardNo;
     }
 
     public void setCardNo(String cardNo) {
         this.cardNo = cardNo;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {

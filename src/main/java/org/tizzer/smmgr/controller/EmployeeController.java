@@ -68,10 +68,10 @@ public class EmployeeController {
             res.setCurrentPage(queryAllEmployeeRequestDto.getCurrentPage());
             res.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return res;
     }
@@ -126,10 +126,10 @@ public class EmployeeController {
             res.setCurrentPage(querySomeEmployeeRequestDto.getCurrentPage());
             res.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return res;
     }
@@ -159,10 +159,10 @@ public class EmployeeController {
             employeeRepository.save(employee);
             saveEmployeeResponseDto.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             saveEmployeeResponseDto.setMessage(e.getMessage());
             saveEmployeeResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return saveEmployeeResponseDto;
     }
@@ -180,10 +180,10 @@ public class EmployeeController {
             employeeRepository.updateEmployee(updateEmployeeRequestDto.getStaffNo(), updateEmployeeRequestDto.getPhone(), updateEmployeeRequestDto.getAddress(), updateEmployeeRequestDto.getAdmin(), updateEmployeeRequestDto.getEnable());
             updateEmployeeResponseDto.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             updateEmployeeResponseDto.setMessage(e.getMessage());
             updateEmployeeResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return updateEmployeeResponseDto;
     }

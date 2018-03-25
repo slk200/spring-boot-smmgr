@@ -1,15 +1,17 @@
-package org.tizzer.smmgr.model.request;
+package org.tizzer.smmgr.model.response;
 
 import java.util.Date;
 
-public class SaveInsiderRequestDto {
+public class QueryOneInsiderResponseDto extends ResultResponse {
     private String cardNo;
     private String name;
     private String phone;
     private String address;
+    private String type;
     private String note;
-    private Integer type;
+    private Integer discount;
     private Date birth;
+    private Date createAt;
 
     public String getCardNo() {
         return cardNo;
@@ -43,6 +45,14 @@ public class SaveInsiderRequestDto {
         this.address = address;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getNote() {
         return note;
     }
@@ -51,12 +61,12 @@ public class SaveInsiderRequestDto {
         this.note = note;
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getDiscount() {
+        return discount;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
     }
 
     public Date getBirth() {
@@ -66,4 +76,13 @@ public class SaveInsiderRequestDto {
     public void setBirth(Date birth) {
         this.birth = birth;
     }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
 }

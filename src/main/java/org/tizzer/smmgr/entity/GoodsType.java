@@ -8,7 +8,7 @@ import java.util.List;
 public class GoodsType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     //名称
     @Column(nullable = false)
@@ -17,11 +17,11 @@ public class GoodsType implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "goodsType")
     private List<Goods> goods;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

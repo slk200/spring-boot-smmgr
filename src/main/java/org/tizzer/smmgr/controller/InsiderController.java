@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.RequestContext;
 import org.tizzer.smmgr.common.LogLevel;
 import org.tizzer.smmgr.common.Logcat;
 import org.tizzer.smmgr.constant.ResultCode;
@@ -24,6 +25,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,10 +53,10 @@ public class InsiderController {
             queryAllInsiderTypeResponseDto.setData(insiderTypes);
             queryAllInsiderTypeResponseDto.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             queryAllInsiderTypeResponseDto.setMessage(e.getMessage());
             queryAllInsiderTypeResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return queryAllInsiderTypeResponseDto;
     }
@@ -75,10 +77,10 @@ public class InsiderController {
             insiderTypeRepository.save(insiderType);
             saveInsiderTypeResponseDto.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             saveInsiderTypeResponseDto.setMessage(e.getMessage());
             saveInsiderTypeResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return saveInsiderTypeResponseDto;
     }
@@ -100,12 +102,45 @@ public class InsiderController {
             insiderTypeRepository.save(insiderType);
             updateInsiderTypeResponseDto.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             updateInsiderTypeResponseDto.setMessage(e.getMessage());
             updateInsiderTypeResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return updateInsiderTypeResponseDto;
+    }
+
+    /**
+     * 删除会员类型
+     *
+     * @param request
+     * @param deleteInsiderTypeRequestDto
+     * @return
+     */
+    @PostMapping(path = "/delete/insider/type")
+    public DeleteInsiderTypeResponseDto deleteInsiderType(HttpServletRequest request, DeleteInsiderTypeRequestDto deleteInsiderTypeRequestDto) {
+        RequestContext requestContext = new RequestContext(request);
+        DeleteInsiderTypeResponseDto deleteInsiderTypeResponseDto = new DeleteInsiderTypeResponseDto();
+        try {
+            List<Integer> usingTypeIds = insiderRepository.findAllUsingType();
+            for (Integer id : deleteInsiderTypeRequestDto.getId()) {
+                if (usingTypeIds.contains(id)) {
+                    deleteInsiderTypeResponseDto.setMessage(requestContext.getMessage("msg.delete.insider.type.result.error"));
+                    deleteInsiderTypeResponseDto.setCode(ResultCode.ERROR);
+                    return deleteInsiderTypeResponseDto;
+                }
+            }
+            for (Integer id : deleteInsiderTypeRequestDto.getId()) {
+                insiderTypeRepository.delete(id);
+            }
+            deleteInsiderTypeResponseDto.setCode(ResultCode.OK);
+        } catch (Exception e) {
+            deleteInsiderTypeResponseDto.setMessage(e.getMessage());
+            deleteInsiderTypeResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
+        }
+        return deleteInsiderTypeResponseDto;
     }
 
     /**
@@ -136,10 +171,10 @@ public class InsiderController {
             res.setCurrentPage(queryAllInsiderRequestDto.getCurrentPage());
             res.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return res;
     }
@@ -194,10 +229,10 @@ public class InsiderController {
             res.setCurrentPage(querySomeInsiderRequestDto.getCurrentPage());
             res.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return res;
     }
@@ -209,12 +244,13 @@ public class InsiderController {
      * @return
      */
     @PostMapping(path = "/save/insider")
-    public SaveInsiderResponseDto saveInsider(SaveInsiderRequestDto saveInsiderRequestDto) {
+    public SaveInsiderResponseDto saveInsider(HttpServletRequest request, SaveInsiderRequestDto saveInsiderRequestDto) {
+        RequestContext requestContext = new RequestContext(request);
         SaveInsiderResponseDto saveInsiderResponseDto = new SaveInsiderResponseDto();
         try {
             Insider savedInsider = insiderRepository.findByPhone(saveInsiderRequestDto.getPhone());
             if (savedInsider != null) {
-                saveInsiderResponseDto.setMessage("手机号不能重复绑定会员卡");
+                saveInsiderResponseDto.setMessage(requestContext.getMessage("msg.save.insider.result.error"));
                 saveInsiderResponseDto.setCode(ResultCode.ERROR);
             } else {
                 Insider toSaveInsider = new Insider();
@@ -222,9 +258,6 @@ public class InsiderController {
                 toSaveInsider.setName(saveInsiderRequestDto.getName());
                 toSaveInsider.setPhone(saveInsiderRequestDto.getPhone());
                 toSaveInsider.setInsiderType(insiderTypeRepository.findOne(saveInsiderRequestDto.getType()));
-                if (saveInsiderRequestDto.getPassword() != null || !saveInsiderRequestDto.getPassword().equals("")) {
-                    toSaveInsider.setPassword(saveInsiderRequestDto.getPassword());
-                }
                 if (saveInsiderRequestDto.getAddress() != null || !saveInsiderRequestDto.getAddress().equals("")) {
                     toSaveInsider.setAddress(saveInsiderRequestDto.getAddress());
                 }
@@ -239,11 +272,68 @@ public class InsiderController {
                 saveInsiderResponseDto.setCode(ResultCode.OK);
             }
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             saveInsiderResponseDto.setMessage(e.getMessage());
             saveInsiderResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return saveInsiderResponseDto;
+    }
+
+    /**
+     * 查询某个会员
+     *
+     * @param queryOneInsiderRequestDto
+     * @return
+     */
+    @PostMapping(path = "/query/insider/one")
+    public QueryOneInsiderResponseDto queryOneInsider(HttpServletRequest request, QueryOneInsiderRequestDto queryOneInsiderRequestDto) {
+        RequestContext requestContext = new RequestContext(request);
+        QueryOneInsiderResponseDto queryOneInsiderResponseDto = new QueryOneInsiderResponseDto();
+        try {
+            Insider insider = insiderRepository.findByCardNoOrPhone(queryOneInsiderRequestDto.getKeyword(), queryOneInsiderRequestDto.getKeyword());
+            if (insider != null) {
+                queryOneInsiderResponseDto.setCardNo(insider.getCardNo());
+                queryOneInsiderResponseDto.setName(insider.getName());
+                queryOneInsiderResponseDto.setPhone(insider.getPhone());
+                queryOneInsiderResponseDto.setAddress(insider.getAddress());
+                queryOneInsiderResponseDto.setNote(insider.getNote());
+                queryOneInsiderResponseDto.setType(insider.getInsiderType().getName());
+                queryOneInsiderResponseDto.setDiscount(insider.getInsiderType().getDiscount());
+                queryOneInsiderResponseDto.setBirth(insider.getBirth());
+                queryOneInsiderResponseDto.setCreateAt(insider.getCreateAt());
+                queryOneInsiderResponseDto.setCode(ResultCode.OK);
+            } else {
+                queryOneInsiderResponseDto.setMessage(requestContext.getMessage("msg.query.insider.result.none"));
+                queryOneInsiderResponseDto.setCode(ResultCode.ERROR);
+            }
+        } catch (Exception e) {
+            queryOneInsiderResponseDto.setMessage(e.getMessage());
+            queryOneInsiderResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
+        }
+        return queryOneInsiderResponseDto;
+    }
+
+    /**
+     * 修改会员资料
+     *
+     * @param updateInsiderRequestDto
+     * @return
+     */
+    @PostMapping(path = "/update/insider")
+    public UpdateInsiderResponseDto updateInsider(UpdateInsiderRequestDto updateInsiderRequestDto) {
+        UpdateInsiderResponseDto updateInsiderResponseDto = new UpdateInsiderResponseDto();
+        try {
+            insiderRepository.updateInsider(updateInsiderRequestDto.getCardNo(), updateInsiderRequestDto.getId(), updateInsiderRequestDto.getBirth());
+            updateInsiderResponseDto.setCode(ResultCode.OK);
+        } catch (Exception e) {
+            updateInsiderResponseDto.setMessage(e.getMessage());
+            updateInsiderResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
+        }
+        return updateInsiderResponseDto;
     }
 }

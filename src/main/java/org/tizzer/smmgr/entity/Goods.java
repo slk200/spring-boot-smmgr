@@ -29,7 +29,7 @@ public class Goods implements Serializable {
 
     //库存
     @Column(nullable = false)
-    private Long inventory;
+    private Integer inventory;
 
     //生产日期
     @Column(name = "sc_date", nullable = false)
@@ -37,9 +37,8 @@ public class Goods implements Serializable {
     private Date scDate;
 
     //截至日期
-    @Column(name = "jz_date", nullable = false)
-    @Temporal(value = TemporalType.DATE)
-    private Date jzDate;
+    @Column(name = "bz_date", nullable = false)
+    private Integer bzDate;
 
     //种类id
     @ManyToOne
@@ -89,11 +88,11 @@ public class Goods implements Serializable {
         this.sPrice = sPrice;
     }
 
-    public Long getInventory() {
+    public Integer getInventory() {
         return inventory;
     }
 
-    public void setInventory(Long inventory) {
+    public void setInventory(Integer inventory) {
         this.inventory = inventory;
     }
 
@@ -105,12 +104,12 @@ public class Goods implements Serializable {
         this.scDate = scDate;
     }
 
-    public Date getJzDate() {
-        return jzDate;
+    public Integer getBzDate() {
+        return bzDate;
     }
 
-    public void setJzDate(Date jzDate) {
-        this.jzDate = jzDate;
+    public void setBzDate(Integer bzDate) {
+        this.bzDate = bzDate;
     }
 
     public GoodsType getGoodsType() {

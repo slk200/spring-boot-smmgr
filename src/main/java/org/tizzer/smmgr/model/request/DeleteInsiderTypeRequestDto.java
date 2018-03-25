@@ -1,6 +1,6 @@
 package org.tizzer.smmgr.model.request;
 
-public class DeleteStoreRequestDto {
+public class DeleteInsiderTypeRequestDto {
     private Integer[] id;
 
     public Integer[] getId() {

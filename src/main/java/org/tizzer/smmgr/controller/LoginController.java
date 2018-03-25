@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.RequestContext;
 import org.tizzer.smmgr.common.LogLevel;
 import org.tizzer.smmgr.common.Logcat;
 import org.tizzer.smmgr.constant.ResultCode;
@@ -11,6 +12,8 @@ import org.tizzer.smmgr.entity.Employee;
 import org.tizzer.smmgr.model.request.LoginRequestDto;
 import org.tizzer.smmgr.model.response.LoginResponseDto;
 import org.tizzer.smmgr.repository.EmployeeRepository;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(path = "/smmgr")
@@ -26,7 +29,8 @@ public class LoginController {
      * @return
      */
     @PostMapping(path = "/login")
-    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
+    public LoginResponseDto login(HttpServletRequest request, LoginRequestDto loginRequestDto) {
+        RequestContext requestContext = new RequestContext(request);
         LoginResponseDto loginResponseDto = new LoginResponseDto();
         try {
             Employee employee = employeeRepository.findByStaffNoAndPassword(loginRequestDto.getStaffNo(), loginRequestDto.getPassword());
@@ -36,17 +40,18 @@ public class LoginController {
                     loginResponseDto.setAdmin(employee.getAdmin());
                     loginResponseDto.setCode(ResultCode.OK);
                 } else {
-                    loginResponseDto.setMessage("账户已停用");
+                    loginResponseDto.setMessage(requestContext.getMessage("msg.login.result.stop"));
                     loginResponseDto.setCode(ResultCode.ERROR);
                 }
             } else {
-                loginResponseDto.setMessage("账号或密码错误");
+                loginResponseDto.setMessage(requestContext.getMessage("msg.login.result.error"));
                 loginResponseDto.setCode(ResultCode.ERROR);
             }
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
             loginResponseDto.setMessage(e.getMessage());
             loginResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return loginResponseDto;
     }

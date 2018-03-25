@@ -56,10 +56,10 @@ public class StoreController {
             res.setCurrentPage(queryAllStoreRequestDto.getCurrentPage());
             res.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return res;
     }
@@ -108,10 +108,10 @@ public class StoreController {
             res.setCurrentPage(querySomeStoreRequestDto.getCurrentPage());
             res.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return res;
     }
@@ -133,10 +133,10 @@ public class StoreController {
             storeRepository.save(store);
             saveStoreResponseDto.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             saveStoreResponseDto.setMessage(e.getMessage());
             saveStoreResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return saveStoreResponseDto;
     }
@@ -158,10 +158,10 @@ public class StoreController {
             queryOneStoreResponseDto.setFoundDate(store.getFoundDate());
             queryOneStoreResponseDto.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             queryOneStoreResponseDto.setMessage(e.getMessage());
             queryOneStoreResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return queryOneStoreResponseDto;
     }
@@ -179,10 +179,10 @@ public class StoreController {
             storeRepository.updateStore(updateStoreRequestDto.getId(), updateStoreRequestDto.getName(), updateStoreRequestDto.getAddress());
             updateStoreResponseDto.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             updateStoreResponseDto.setMessage(e.getMessage());
             updateStoreResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return updateStoreResponseDto;
     }
@@ -197,15 +197,15 @@ public class StoreController {
     public DeleteStoreResponseDto deleteStore(DeleteStoreRequestDto deleteStoreRequestDto) {
         DeleteStoreResponseDto deleteStoreResponseDto = new DeleteStoreResponseDto();
         try {
-            for (Long id : deleteStoreRequestDto.getId()) {
+            for (Integer id : deleteStoreRequestDto.getId()) {
                 storeRepository.delete(id);
             }
             deleteStoreResponseDto.setCode(ResultCode.OK);
         } catch (Exception e) {
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
             deleteStoreResponseDto.setMessage(e.getMessage());
             deleteStoreResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
         }
         return deleteStoreResponseDto;
     }

@@ -6,7 +6,7 @@ public class QueryAllGoodsResponseDto {
     private String type;
     private Double oPrice;
     private Double sPrice;
-    private Long inventory;
+    private Integer inventory;
 
     public String getUpc() {
         return upc;
@@ -48,11 +48,11 @@ public class QueryAllGoodsResponseDto {
         this.sPrice = sPrice;
     }
 
-    public Long getInventory() {
+    public Integer getInventory() {
         return inventory;
     }
 
-    public void setInventory(Long inventory) {
+    public void setInventory(Integer inventory) {
         this.inventory = inventory;
     }
 }

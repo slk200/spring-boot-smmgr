@@ -9,7 +9,7 @@ public class Store {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false)
     private String name;
@@ -24,11 +24,11 @@ public class Store {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "store")
     private List<Employee> employees;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

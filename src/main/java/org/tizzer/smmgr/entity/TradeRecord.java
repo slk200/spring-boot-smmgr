@@ -16,9 +16,9 @@ public class TradeRecord implements Serializable {
     @Column(name = "staff_no", nullable = false)
     private String staffNo;
 
-    //是否为会员订单
-    @Column(name = "is_insider")
-    private boolean isInsider;
+    @JoinColumn(name = "card_no", referencedColumnName = "")
+    @ManyToOne
+    private Insider insider;
 
     //折扣
     @Column(nullable = false, scale = 2)
@@ -53,12 +53,12 @@ public class TradeRecord implements Serializable {
         this.staffNo = staffNo;
     }
 
-    public boolean isInsider() {
-        return isInsider;
+    public Insider getInsider() {
+        return insider;
     }
 
-    public void setInsider(boolean insider) {
-        isInsider = insider;
+    public void setInsider(Insider insider) {
+        this.insider = insider;
     }
 
     public Float getDiscount() {
