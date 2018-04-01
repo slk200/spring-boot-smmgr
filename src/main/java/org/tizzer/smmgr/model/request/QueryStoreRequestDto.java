@@ -1,6 +1,6 @@
 package org.tizzer.smmgr.model.request;
 
-public class QuerySomeEmployeeRequestDto extends PageableRequestDto {
+public class QueryStoreRequestDto extends PageableRequestDto {
 
     private String startDate;
     private String endDate;

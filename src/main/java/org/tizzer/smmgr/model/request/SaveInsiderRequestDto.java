@@ -1,7 +1,5 @@
 package org.tizzer.smmgr.model.request;
 
-import java.util.Date;
-
 public class SaveInsiderRequestDto {
     private String cardNo;
     private String name;
@@ -9,7 +7,7 @@ public class SaveInsiderRequestDto {
     private String address;
     private String note;
     private Integer type;
-    private Date birth;
+    private String birth;
 
     public String getCardNo() {
         return cardNo;
@@ -59,11 +57,11 @@ public class SaveInsiderRequestDto {
         this.type = type;
     }
 
-    public Date getBirth() {
+    public String getBirth() {
         return birth;
     }
 
-    public void setBirth(Date birth) {
+    public void setBirth(String birth) {
         this.birth = birth;
     }
 }

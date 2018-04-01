@@ -6,19 +6,9 @@ import java.util.Date;
 
 public class TimeUtil {
 
-    public static Date endOfDay(Date date) {
-        String strDate = new SimpleDateFormat("yyyy-MM-dd").format(date) + " 23:59:59";
+    public static Date string2Day(String date) {
         try {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(strDate);
-        } catch (ParseException e) {
-            return null;
-        }
-    }
-
-    public static Date startOfDay(Date date) {
-        String strDate = new SimpleDateFormat("yyyy-MM-dd").format(date) + " 00:00:00";
-        try {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(strDate);
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
         } catch (ParseException e) {
             return null;
         }

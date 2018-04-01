@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(path = "/smmgr")
@@ -144,48 +145,12 @@ public class InsiderController {
     }
 
     /**
-     * 查询所有会员
-     *
-     * @param queryAllInsiderRequestDto
-     * @return
-     */
-    @PostMapping(path = "/query/insider/all")
-    public ResultListResponse<QueryAllInsiderResponseDto> queryAllInsider(QueryAllInsiderRequestDto queryAllInsiderRequestDto) {
-        ResultListResponse<QueryAllInsiderResponseDto> res = new ResultListResponse<>();
-        try {
-            Pageable pageable = new PageRequest(queryAllInsiderRequestDto.getCurrentPage(), queryAllInsiderRequestDto.getPageSize());
-            Page<Insider> page = insiderRepository.findAll(pageable);
-            for (Insider insider : page.getContent()) {
-                QueryAllInsiderResponseDto queryAllInsiderResponseDto = new QueryAllInsiderResponseDto();
-                queryAllInsiderResponseDto.setCardNo(insider.getCardNo());
-                queryAllInsiderResponseDto.setName(insider.getName());
-                queryAllInsiderResponseDto.setPhone(insider.getPhone());
-                queryAllInsiderResponseDto.setAddress(insider.getAddress());
-                queryAllInsiderResponseDto.setType(insider.getInsiderType().getName());
-                queryAllInsiderResponseDto.setNote(insider.getNote());
-                queryAllInsiderResponseDto.setBirth(insider.getBirth());
-                queryAllInsiderResponseDto.setCreateAt(insider.getCreateAt());
-                res.setData(queryAllInsiderResponseDto);
-            }
-            res.setPageCount(page.getTotalPages());
-            res.setCurrentPage(queryAllInsiderRequestDto.getCurrentPage());
-            res.setCode(ResultCode.OK);
-        } catch (Exception e) {
-            res.setMessage(e.getMessage());
-            res.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
-        }
-        return res;
-    }
-
-    /**
      * 查询满足条件的所有会员
      *
      * @param querySomeInsiderRequestDto
      * @return
      */
-    @PostMapping(path = "/query/insider/some")
+    @GetMapping(path = "/query/insider")
     public ResultListResponse<QuerySomeInsiderResponseDto> querySomeInsider(QuerySomeInsiderRequestDto querySomeInsiderRequestDto) {
         ResultListResponse<QuerySomeInsiderResponseDto> res = new ResultListResponse<>();
         try {
@@ -195,19 +160,19 @@ public class InsiderController {
                 public Predicate toPredicate(Root<Insider> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                     List<Predicate> predicates = new ArrayList<>();
                     if (querySomeInsiderRequestDto.getStartDate() != null) {
-                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.startOfDay(querySomeInsiderRequestDto.getStartDate())));
+                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(querySomeInsiderRequestDto.getStartDate())));
                     }
                     if (querySomeInsiderRequestDto.getEndDate() != null) {
-                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.endOfDay(querySomeInsiderRequestDto.getEndDate())));
+                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(querySomeInsiderRequestDto.getEndDate())));
                     }
-                    if (!querySomeInsiderRequestDto.getKeyWord().equals("")) {
-                        predicates.add(cb.or(cb.like(root.get("cardNo"), "%" + querySomeInsiderRequestDto.getKeyWord() + "%"),
-                                cb.like(root.get("name"), "%" + querySomeInsiderRequestDto.getKeyWord() + "%"),
-                                cb.like(root.get("phone"), "%" + querySomeInsiderRequestDto.getKeyWord() + "%"),
-                                cb.like(root.get("address"), "%" + querySomeInsiderRequestDto.getKeyWord() + "%")));
+                    if (!querySomeInsiderRequestDto.getKeyword().equals("")) {
+                        predicates.add(cb.or(cb.like(root.get("cardNo"), "%" + querySomeInsiderRequestDto.getKeyword() + "%"),
+                                cb.like(root.get("name"), "%" + querySomeInsiderRequestDto.getKeyword() + "%"),
+                                cb.like(root.get("phone"), "%" + querySomeInsiderRequestDto.getKeyword() + "%"),
+                                cb.like(root.get("address"), "%" + querySomeInsiderRequestDto.getKeyword() + "%")));
                     }
                     if (!predicates.isEmpty()) {
-                        query.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
+                        query.where(cb.and(predicates.toArray(new Predicate[0])));
                     }
                     return null;
                 }
@@ -226,7 +191,6 @@ public class InsiderController {
                 res.setData(querySomeInsiderResponseDto);
             }
             res.setPageCount(page.getTotalPages());
-            res.setCurrentPage(querySomeInsiderRequestDto.getCurrentPage());
             res.setCode(ResultCode.OK);
         } catch (Exception e) {
             res.setMessage(e.getMessage());
@@ -258,14 +222,14 @@ public class InsiderController {
                 toSaveInsider.setName(saveInsiderRequestDto.getName());
                 toSaveInsider.setPhone(saveInsiderRequestDto.getPhone());
                 toSaveInsider.setInsiderType(insiderTypeRepository.findOne(saveInsiderRequestDto.getType()));
-                if (saveInsiderRequestDto.getAddress() != null || !saveInsiderRequestDto.getAddress().equals("")) {
+                if (saveInsiderRequestDto.getAddress() != null || !Objects.equals(saveInsiderRequestDto.getAddress(), "")) {
                     toSaveInsider.setAddress(saveInsiderRequestDto.getAddress());
                 }
-                if (saveInsiderRequestDto.getNote() != null || !saveInsiderRequestDto.getNote().equals("")) {
+                if (saveInsiderRequestDto.getNote() != null || !Objects.equals(saveInsiderRequestDto.getNote(), "")) {
                     toSaveInsider.setNote(saveInsiderRequestDto.getNote());
                 }
                 if (saveInsiderRequestDto.getBirth() != null) {
-                    toSaveInsider.setBirth(TimeUtil.startOfDay(saveInsiderRequestDto.getBirth()));
+                    toSaveInsider.setBirth(TimeUtil.string2Day(saveInsiderRequestDto.getBirth()));
                 }
                 toSaveInsider.setCreateAt(new Date());
                 insiderRepository.save(toSaveInsider);
@@ -286,7 +250,7 @@ public class InsiderController {
      * @param queryOneInsiderRequestDto
      * @return
      */
-    @PostMapping(path = "/query/insider/one")
+    @GetMapping(path = "/query/insider/one")
     public QueryOneInsiderResponseDto queryOneInsider(HttpServletRequest request, QueryOneInsiderRequestDto queryOneInsiderRequestDto) {
         RequestContext requestContext = new RequestContext(request);
         QueryOneInsiderResponseDto queryOneInsiderResponseDto = new QueryOneInsiderResponseDto();

@@ -1,10 +1,9 @@
 package org.tizzer.smmgr.model.response;
 
-public class QueryAllGoodsResponseDto {
+public class QueryGoodsResponseDto {
     private String upc;
     private String name;
-    private String type;
-    private Double oPrice;
+    private Double jPrice;
     private Double sPrice;
     private Integer inventory;
 
@@ -24,20 +23,12 @@ public class QueryAllGoodsResponseDto {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public Double getjPrice() {
+        return jPrice;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Double getoPrice() {
-        return oPrice;
-    }
-
-    public void setoPrice(Double oPrice) {
-        this.oPrice = oPrice;
+    public void setjPrice(Double jPrice) {
+        this.jPrice = jPrice;
     }
 
     public Double getsPrice() {

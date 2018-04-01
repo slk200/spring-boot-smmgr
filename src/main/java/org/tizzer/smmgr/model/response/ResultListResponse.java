@@ -6,7 +6,6 @@ import java.util.List;
 public class ResultListResponse<T> extends ResultResponse {
     private List<T> data = new ArrayList<>();
     private Integer pageCount;
-    private Integer currentPage;
 
     public List<T> getData() {
         return data;
@@ -22,14 +21,6 @@ public class ResultListResponse<T> extends ResultResponse {
 
     public void setPageCount(Integer pageCount) {
         this.pageCount = pageCount;
-    }
-
-    public Integer getCurrentPage() {
-        return currentPage;
-    }
-
-    public void setCurrentPage(Integer currentPage) {
-        this.currentPage = currentPage;
     }
 
 }

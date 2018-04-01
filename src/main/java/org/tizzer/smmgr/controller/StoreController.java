@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,79 +35,46 @@ public class StoreController {
     StoreRepository storeRepository;
 
     /**
-     * 查询全部门店
-     *
-     * @param queryAllStoreRequestDto
-     * @return
-     */
-    @PostMapping(path = "/query/store/all")
-    public ResultListResponse<QueryAllStoreResponseDto> queryAllStore(QueryAllStoreRequestDto queryAllStoreRequestDto) {
-        ResultListResponse<QueryAllStoreResponseDto> res = new ResultListResponse<>();
-        try {
-            Pageable pageable = new PageRequest(queryAllStoreRequestDto.getCurrentPage(), queryAllStoreRequestDto.getPageSize());
-            Page<Store> page = storeRepository.findAll(pageable);
-            for (Store store : page.getContent()) {
-                QueryAllStoreResponseDto queryAllStoreResponseDto = new QueryAllStoreResponseDto();
-                queryAllStoreResponseDto.setId(store.getId());
-                queryAllStoreResponseDto.setName(store.getName());
-                queryAllStoreResponseDto.setAddress(store.getAddress());
-                queryAllStoreResponseDto.setFoundDate(store.getFoundDate());
-                res.setData(queryAllStoreResponseDto);
-            }
-            res.setPageCount(page.getTotalPages());
-            res.setCurrentPage(queryAllStoreRequestDto.getCurrentPage());
-            res.setCode(ResultCode.OK);
-        } catch (Exception e) {
-            res.setMessage(e.getMessage());
-            res.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
-        }
-        return res;
-    }
-
-    /**
      * 查询满足条件的所有门店
      *
-     * @param querySomeStoreRequestDto
+     * @param queryStoreRequestDto
      * @return
      */
-    @PostMapping(path = "/query/store/some")
-    public ResultListResponse<QuerySomeStoreResponseDto> querySomeStore(QuerySomeStoreRequestDto querySomeStoreRequestDto) {
-        ResultListResponse<QuerySomeStoreResponseDto> res = new ResultListResponse<>();
+    @GetMapping(path = "/query/store")
+    public ResultListResponse<QueryStoreResponseDto> querySomeStore(QueryStoreRequestDto queryStoreRequestDto) {
+        ResultListResponse<QueryStoreResponseDto> res = new ResultListResponse<>();
         try {
-            Pageable pageable = new PageRequest(querySomeStoreRequestDto.getCurrentPage(), querySomeStoreRequestDto.getPageSize());
+            Pageable pageable = new PageRequest(queryStoreRequestDto.getCurrentPage(), queryStoreRequestDto.getPageSize());
             Specification<Store> storeSpecification = new Specification<Store>() {
                 @Override
                 public Predicate toPredicate(Root<Store> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                     List<Predicate> predicates = new ArrayList<>();
-                    if (querySomeStoreRequestDto.getStartDate() != null) {
-                        predicates.add(cb.greaterThanOrEqualTo(root.get("foundDate"), TimeUtil.startOfDay(querySomeStoreRequestDto.getStartDate())));
+                    if (queryStoreRequestDto.getStartDate() != null) {
+                        predicates.add(cb.greaterThanOrEqualTo(root.get("foundDate"), TimeUtil.string2Day(queryStoreRequestDto.getStartDate())));
                     }
-                    if (querySomeStoreRequestDto.getEndDate() != null) {
-                        predicates.add(cb.lessThanOrEqualTo(root.get("foundDate"), TimeUtil.endOfDay(querySomeStoreRequestDto.getEndDate())));
+                    if (queryStoreRequestDto.getEndDate() != null) {
+                        predicates.add(cb.lessThanOrEqualTo(root.get("foundDate"), TimeUtil.string2Day(queryStoreRequestDto.getEndDate())));
                     }
-                    if (!querySomeStoreRequestDto.getKeyWord().equals("")) {
-                        predicates.add(cb.or(cb.like(root.get("name"), "%" + querySomeStoreRequestDto.getKeyWord() + "%"),
-                                cb.like(root.get("address"), "%" + querySomeStoreRequestDto.getKeyWord() + "%")));
+                    if (!queryStoreRequestDto.getKeyword().equals("")) {
+                        predicates.add(cb.or(cb.like(root.get("name"), "%" + queryStoreRequestDto.getKeyword() + "%"),
+                                cb.like(root.get("address"), "%" + queryStoreRequestDto.getKeyword() + "%")));
                     }
                     if (!predicates.isEmpty()) {
-                        query.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
+                        query.where(cb.and(predicates.toArray(new Predicate[0])));
                     }
                     return null;
                 }
             };
             Page<Store> page = storeRepository.findAll(storeSpecification, pageable);
             for (Store store : page.getContent()) {
-                QuerySomeStoreResponseDto querySomeStoreResponseDto = new QuerySomeStoreResponseDto();
-                querySomeStoreResponseDto.setId(store.getId());
-                querySomeStoreResponseDto.setName(store.getName());
-                querySomeStoreResponseDto.setAddress(store.getAddress());
-                querySomeStoreResponseDto.setFoundDate(store.getFoundDate());
-                res.setData(querySomeStoreResponseDto);
+                QueryStoreResponseDto queryStoreResponseDto = new QueryStoreResponseDto();
+                queryStoreResponseDto.setId(store.getId());
+                queryStoreResponseDto.setName(store.getName());
+                queryStoreResponseDto.setAddress(store.getAddress());
+                queryStoreResponseDto.setFoundDate(store.getFoundDate());
+                res.setData(queryStoreResponseDto);
             }
             res.setPageCount(page.getTotalPages());
-            res.setCurrentPage(querySomeStoreRequestDto.getCurrentPage());
             res.setCode(ResultCode.OK);
         } catch (Exception e) {
             res.setMessage(e.getMessage());
@@ -147,7 +116,7 @@ public class StoreController {
      * @param queryOneStoreRequestDto
      * @return
      */
-    @PostMapping(path = "/query/store/one")
+    @GetMapping(path = "/query/store/one")
     public QueryOneStoreResponseDto queryOneStore(QueryOneStoreRequestDto queryOneStoreRequestDto) {
         QueryOneStoreResponseDto queryOneStoreResponseDto = new QueryOneStoreResponseDto();
         try {
@@ -193,6 +162,7 @@ public class StoreController {
      * @param deleteStoreRequestDto
      * @return
      */
+    @Transactional
     @PostMapping(path = "/delete/store")
     public DeleteStoreResponseDto deleteStore(DeleteStoreRequestDto deleteStoreRequestDto) {
         DeleteStoreResponseDto deleteStoreResponseDto = new DeleteStoreResponseDto();

@@ -13,7 +13,7 @@ public interface StoreRepository extends JpaRepository<Store, Integer>, JpaSpeci
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Store s SET s.name=:name,s.address=:address WHERE s.id=:id", nativeQuery = true)
+    @Query(value = "update store s set s.name=:name,s.address=:address where s.id=:id", nativeQuery = true)
     void updateStore(@Param("id") Long id, @Param("name") String name, @Param("address") String address);
 
 }

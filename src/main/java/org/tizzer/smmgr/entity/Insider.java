@@ -3,7 +3,6 @@ package org.tizzer.smmgr.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Insider implements Serializable {
@@ -38,9 +37,6 @@ public class Insider implements Serializable {
     @ManyToOne
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private InsiderType insiderType;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insider")
-    List<TradeRecord> tradeRecords;
 
     public String getCardNo() {
         return cardNo;

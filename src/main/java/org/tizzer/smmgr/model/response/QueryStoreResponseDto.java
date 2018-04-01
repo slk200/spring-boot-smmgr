@@ -2,7 +2,7 @@ package org.tizzer.smmgr.model.response;
 
 import java.util.Date;
 
-public class QueryAllStoreResponseDto {
+public class QueryStoreResponseDto {
     private Integer id;
     private String name;
     private String address;

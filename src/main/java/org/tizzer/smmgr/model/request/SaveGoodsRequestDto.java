@@ -1,7 +1,5 @@
 package org.tizzer.smmgr.model.request;
 
-import java.util.Date;
-
 public class SaveGoodsRequestDto {
     private String upc;
     private String name;
@@ -9,7 +7,7 @@ public class SaveGoodsRequestDto {
     private Double jPrice;
     private Double sPrice;
     private Integer invention;
-    private Date scDate;
+    private String scDate;
     private Integer bzDate;
     private Integer id;
     private String type;
@@ -62,11 +60,11 @@ public class SaveGoodsRequestDto {
         this.invention = invention;
     }
 
-    public Date getScDate() {
+    public String getScDate() {
         return scDate;
     }
 
-    public void setScDate(Date scDate) {
+    public void setScDate(String scDate) {
         this.scDate = scDate;
     }
 

@@ -1,33 +1,31 @@
 package org.tizzer.smmgr.model.request;
 
-import java.util.Date;
-
 public class QuerySomeInsiderRequestDto extends PageableRequestDto {
-    private Date startDate;
-    private Date endDate;
-    private String keyWord;
+    private String startDate;
+    private String endDate;
+    private String keyword;
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
-    public String getKeyWord() {
-        return keyWord;
+    public String getKeyword() {
+        return keyword;
     }
 
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 }

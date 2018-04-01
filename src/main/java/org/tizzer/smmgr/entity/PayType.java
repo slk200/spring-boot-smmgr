@@ -2,7 +2,6 @@ package org.tizzer.smmgr.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 public class PayType implements Serializable {
@@ -13,9 +12,6 @@ public class PayType implements Serializable {
     //支付方式
     @Column(nullable = false)
     private String name;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "payType")
-    private List<TradeRecord> tradeRecords;
 
     public Integer getId() {
         return id;

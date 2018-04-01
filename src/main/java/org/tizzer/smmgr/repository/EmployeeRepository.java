@@ -15,7 +15,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, String>, Jpa
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Employee e SET e.phone=:phone,e.address=:address,e.is_admin=:admin,e.is_enable=:enable WHERE e.staff_no=:staffNo", nativeQuery = true)
+    @Query(value = "update employee e set e.phone=:phone,e.address=:address,e.is_admin=:admin,e.is_enable=:enable where e.staff_no=:staffNo", nativeQuery = true)
     void updateEmployee(@Param("staffNo") String staffNo, @Param("phone") String phone, @Param("address") String address, @Param("admin") boolean admin, @Param("enable") boolean enable);
 
 }

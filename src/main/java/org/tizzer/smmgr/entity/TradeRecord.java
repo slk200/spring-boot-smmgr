@@ -3,7 +3,6 @@ package org.tizzer.smmgr.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class TradeRecord implements Serializable {
@@ -13,29 +12,42 @@ public class TradeRecord implements Serializable {
     private String serialNo;
 
     //员工号
-    @Column(name = "staff_no", nullable = false)
+    @Column(nullable = false)
     private String staffNo;
 
-    @JoinColumn(name = "card_no", referencedColumnName = "")
-    @ManyToOne
-    private Insider insider;
+    //牌号
+    @Column(nullable = false)
+    private String markNo;
+
+    //支付方式
+    @Column(nullable = false)
+    private String payType;
+
+    //会员号
+    private String cardNo;
+
+    //会员电话
+    private String phone;
 
     //折扣
-    @Column(nullable = false, scale = 2)
-    private Float discount;
+    @Column(nullable = false)
+    private Integer discount;
+
+    //总额
+    @Column(nullable = false)
+    private Double cost;
 
     //出售时间
-    @Column(name = "sold_time", nullable = false)
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date soldTime;
 
-    //支付方式
-    @JoinColumn(name = "type_id", referencedColumnName = "id")
-    @ManyToOne
-    private PayType payType;
+    //类型
+    @Column(nullable = false)
+    private boolean type;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tradeRecord")
-    private List<TradeSpec> tradeSpecs;
+    //原单据
+    private String originalSerial;
 
     public String getSerialNo() {
         return serialNo;
@@ -53,20 +65,52 @@ public class TradeRecord implements Serializable {
         this.staffNo = staffNo;
     }
 
-    public Insider getInsider() {
-        return insider;
+    public String getMarkNo() {
+        return markNo;
     }
 
-    public void setInsider(Insider insider) {
-        this.insider = insider;
+    public void setMarkNo(String markNo) {
+        this.markNo = markNo;
     }
 
-    public Float getDiscount() {
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
+
+    public String getCardNo() {
+        return cardNo;
+    }
+
+    public void setCardNo(String cardNo) {
+        this.cardNo = cardNo;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Integer getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Float discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
     }
 
     public Date getSoldTime() {
@@ -77,11 +121,19 @@ public class TradeRecord implements Serializable {
         this.soldTime = soldTime;
     }
 
-    public PayType getPayType() {
-        return payType;
+    public boolean isType() {
+        return type;
     }
 
-    public void setPayType(PayType payType) {
-        this.payType = payType;
+    public void setType(boolean type) {
+        this.type = type;
+    }
+
+    public String getOriginalSerial() {
+        return originalSerial;
+    }
+
+    public void setOriginalSerial(String originalSerial) {
+        this.originalSerial = originalSerial;
     }
 }
