@@ -1,10 +1,9 @@
 package org.tizzer.smmgr.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-public class TradeSpec implements Serializable {
+public class LossSpec {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -17,13 +16,10 @@ public class TradeSpec implements Serializable {
     //原价
     @Column(nullable = false, scale = 2)
     private double primeCost;
-    //售价
-    @Column(nullable = false)
-    private double presentCost;
     //数量
     @Column(nullable = false)
     private Integer quantity;
-    //流水号
+    //单号
     @Column(nullable = false)
     private String serialNo;
 
@@ -57,14 +53,6 @@ public class TradeSpec implements Serializable {
 
     public void setPrimeCost(double primeCost) {
         this.primeCost = primeCost;
-    }
-
-    public double getPresentCost() {
-        return presentCost;
-    }
-
-    public void setPresentCost(double presentCost) {
-        this.presentCost = presentCost;
     }
 
     public Integer getQuantity() {

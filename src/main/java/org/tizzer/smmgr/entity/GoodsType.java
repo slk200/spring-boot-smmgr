@@ -9,11 +9,9 @@ public class GoodsType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     //名称
     @Column(nullable = false)
     private String name;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "goodsType")
     private List<Goods> goods;
 

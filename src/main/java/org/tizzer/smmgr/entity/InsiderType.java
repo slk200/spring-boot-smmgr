@@ -9,15 +9,12 @@ public class InsiderType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     //类型名称
     @Column(nullable = false)
     private String name;
-
     //折扣
     @Column(nullable = false)
     private Integer discount;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insiderType")
     private List<Insider> insiders;
 

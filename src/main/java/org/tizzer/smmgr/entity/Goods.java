@@ -9,36 +9,28 @@ public class Goods implements Serializable {
     //条形码
     @Id
     private String upc;
-
     //名称
     @Column(nullable = false)
     private String name;
-
     //拼音码
     @Column(nullable = false)
     private String spell;
-
     //采购价
     @Column(nullable = false, scale = 2)
     private Double jPrice;
-
     //零售价
     @Column(nullable = false, scale = 2)
     private Double sPrice;
-
     //库存
     @Column(nullable = false)
     private Integer inventory;
-
     //生产日期
     @Column(nullable = false)
     @Temporal(value = TemporalType.DATE)
     private Date scDate;
-
     //截至日期
     @Column(nullable = false)
     private Integer bzDate;
-
     //种类id
     @ManyToOne
     @JoinColumn(name = "type_id", referencedColumnName = "id")

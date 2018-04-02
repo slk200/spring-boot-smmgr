@@ -10,29 +10,22 @@ public class Insider implements Serializable {
     @Id
     @Column(name = "card_no")
     private String cardNo;
-
     //会员姓名
     @Column(nullable = false)
     private String name;
-
     //联系电话
     @Column(nullable = false)
     private String phone;
-
     //生日
     @Temporal(TemporalType.DATE)
     private Date birth;
-
     //联系地址
     private String address;
-
     //备注
     private String note;
-
     //录入时间
     @Column(name = "create_at", nullable = false)
     private Date createAt;
-
     //会员类型id
     @ManyToOne
     @JoinColumn(name = "type_id", referencedColumnName = "id")

@@ -8,7 +8,6 @@ public class PayType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     //支付方式
     @Column(nullable = false)
     private String name;

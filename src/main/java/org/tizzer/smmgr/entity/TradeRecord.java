@@ -10,42 +10,32 @@ public class TradeRecord implements Serializable {
     @Id
     @Column(name = "serial_no")
     private String serialNo;
-
     //员工号
     @Column(nullable = false)
     private String staffNo;
-
     //牌号
     @Column(nullable = false)
     private String markNo;
-
     //支付方式
     @Column(nullable = false)
     private String payType;
-
     //会员号
     private String cardNo;
-
     //会员电话
     private String phone;
-
     //折扣
     @Column(nullable = false)
     private Integer discount;
-
     //总额
     @Column(nullable = false)
     private Double cost;
-
     //出售时间
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date soldTime;
-
     //类型
     @Column(nullable = false)
     private boolean type;
-
     //原单据
     private String originalSerial;
 

@@ -10,35 +10,28 @@ public class Employee implements Serializable {
     @Id
     @Column(name = "staff_no")
     private String staffNo;
-
     //密码
     @Column(nullable = false)
     private String password;
-
     //姓名
     @Column(nullable = false)
     private String name;
-
     //联系电话
     @Column(nullable = false)
     private String phone;
-
     //联系地址
     @Column(nullable = false)
     private String address;
-
     //是否为管理员
     @Column(name = "is_admin", nullable = false)
     private Boolean isAdmin;
-
+    //是否启用
     @Column(name = "is_enable", nullable = false)
     private Boolean isEnable;
-
     //注册时间
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
-
     //所属门店
     @ManyToOne
     @JoinColumn(name = "store_id", referencedColumnName = "id")
