@@ -148,8 +148,12 @@ public class GoodsController {
         QueryTradeGoodsResponseDto<Goods> queryTradeGoodsResponseDto = new QueryTradeGoodsResponseDto<>();
         try {
             List<Goods> goods = goodsRepository.findAllByUpcLikeOrNameLikeOrSpellLike(queryTradeGoodsRequestDto.getKeyword(), queryTradeGoodsRequestDto.getKeyword(), queryTradeGoodsRequestDto.getKeyword());
-            queryTradeGoodsResponseDto.setData(goods);
-            queryTradeGoodsResponseDto.setCode(ResultCode.OK);
+            if (!goods.isEmpty()) {
+                queryTradeGoodsResponseDto.setData(goods);
+                queryTradeGoodsResponseDto.setCode(ResultCode.OK);
+            } else {
+                queryTradeGoodsResponseDto.setCode(ResultCode.ERROR);
+            }
         } catch (Exception e) {
             queryTradeGoodsResponseDto.setMessage(e.getMessage());
             queryTradeGoodsResponseDto.setCode(ResultCode.ERROR);
