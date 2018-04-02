@@ -11,6 +11,7 @@ public class ScheduleTask {
     public void resetMarkId() {
         SystemConstants.markId = 1;
         SystemConstants.refundId = 1;
+        SystemConstants.lossId = 1;
     }
 
 }

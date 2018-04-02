@@ -16,13 +16,13 @@ public class SerialCallable {
             @Override
             public List<Object> call() {
                 List<Object> list = new ArrayList<>();
-                Date nowDate = new Date();
-                String date = new SimpleDateFormat("yyyyMMdd").format(nowDate);
+                Date currentDate = new Date();
+                String date = new SimpleDateFormat("yyyyMMdd").format(currentDate);
                 String markId = String.format("%04d", SystemConstants.markId++);
                 String random = String.format("%03d", new Random().nextInt(100));
-                String time = new SimpleDateFormat("HHmmss").format(nowDate);
+                String time = new SimpleDateFormat("HHmmss").format(currentDate);
                 list.add(date + markId + random + time);
-                list.add(nowDate);
+                list.add(currentDate);
                 list.add(markId);
                 return list;
             }
@@ -35,13 +35,31 @@ public class SerialCallable {
             @Override
             public List<Object> call() {
                 List<Object> list = new ArrayList<>();
-                Date nowDate = new Date();
-                String date = new SimpleDateFormat("yyyyMMdd").format(nowDate);
+                Date currentDate = new Date();
+                String date = new SimpleDateFormat("yyyyMMdd").format(currentDate);
                 String markId = String.format("%04d", SystemConstants.refundId++);
                 String random = String.format("%03d", new Random().nextInt(100));
-                String time = new SimpleDateFormat("HHmmss").format(nowDate);
+                String time = new SimpleDateFormat("HHmmss").format(currentDate);
                 list.add(date + markId + random + time);
-                list.add(nowDate);
+                list.add(currentDate);
+                list.add(markId);
+                return list;
+            }
+        };
+    }
+
+    public Callable<List<Object>> createLossCallable() {
+        return new Callable<List<Object>>() {
+            @Override
+            public List<Object> call() {
+                List<Object> list = new ArrayList<>();
+                Date currentDate = new Date();
+                String date = new SimpleDateFormat("yyyyMMdd").format(currentDate);
+                String markId = String.format("%04d", SystemConstants.lossId++);
+                String random = String.format("%03d", new Random().nextInt(100));
+                String time = new SimpleDateFormat("HHmmss").format(currentDate);
+                list.add(date + markId + random + time);
+                list.add(currentDate);
                 list.add(markId);
                 return list;
             }

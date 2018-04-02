@@ -1,6 +1,6 @@
 package org.tizzer.smmgr.model.request;
 
-public class SaveTradeGoodsRequestDto {
+public class SaveTradeRecordRequestDto {
     private String staffNo;
     private Integer discount;
     private String payType;

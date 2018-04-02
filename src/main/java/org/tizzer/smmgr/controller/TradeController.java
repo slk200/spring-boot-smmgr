@@ -20,7 +20,7 @@ import org.tizzer.smmgr.entity.TradeSpec;
 import org.tizzer.smmgr.model.request.QueryRefundRecordRequestDto;
 import org.tizzer.smmgr.model.request.QueryTradeRecordRequestDto;
 import org.tizzer.smmgr.model.request.QueryTradeSpecRequestDto;
-import org.tizzer.smmgr.model.request.SaveTradeGoodsRequestDto;
+import org.tizzer.smmgr.model.request.SaveTradeRecordRequestDto;
 import org.tizzer.smmgr.model.response.*;
 import org.tizzer.smmgr.repository.PayTypeRepository;
 import org.tizzer.smmgr.repository.TradeRecordRepository;
@@ -74,16 +74,16 @@ public class TradeController {
     /**
      * 保存交易记录
      *
-     * @param saveTradeGoodsRequestDto
+     * @param saveTradeRecordRequestDto
      * @return
      */
     @Transactional
     @PostMapping(path = "/save/trade/record")
-    public SaveTradeGoodsResponseDto tradeGoods(SaveTradeGoodsRequestDto saveTradeGoodsRequestDto) {
-        SaveTradeGoodsResponseDto saveTradeGoodsResponseDto = new SaveTradeGoodsResponseDto();
+    public SaveTradeRecordResponseDto tradeGoods(SaveTradeRecordRequestDto saveTradeRecordRequestDto) {
+        SaveTradeRecordResponseDto saveTradeRecordResponseDto = new SaveTradeRecordResponseDto();
         try {
             List<Object> params;
-            if (saveTradeGoodsRequestDto.getType()) {
+            if (saveTradeRecordRequestDto.getType()) {
                 params = SerialUtil.getIncomeSerialNo();
             } else {
                 params = SerialUtil.getRefundSerialNo();
@@ -92,35 +92,35 @@ public class TradeController {
             tradeRecord.setSerialNo((String) params.get(0));
             tradeRecord.setSoldTime((Date) params.get(1));
             tradeRecord.setMarkNo((String) params.get(2));
-            tradeRecord.setStaffNo(saveTradeGoodsRequestDto.getStaffNo());
-            tradeRecord.setDiscount(saveTradeGoodsRequestDto.getDiscount());
-            tradeRecord.setPayType(saveTradeGoodsRequestDto.getPayType());
-            tradeRecord.setCardNo(saveTradeGoodsRequestDto.getCardNo());
-            tradeRecord.setPhone(saveTradeGoodsRequestDto.getPhone());
-            tradeRecord.setCost(saveTradeGoodsRequestDto.getCost());
-            tradeRecord.setType(saveTradeGoodsRequestDto.getType());
-            tradeRecord.setOriginalSerial(saveTradeGoodsRequestDto.getSerialNo());
+            tradeRecord.setStaffNo(saveTradeRecordRequestDto.getStaffNo());
+            tradeRecord.setDiscount(saveTradeRecordRequestDto.getDiscount());
+            tradeRecord.setPayType(saveTradeRecordRequestDto.getPayType());
+            tradeRecord.setCardNo(saveTradeRecordRequestDto.getCardNo());
+            tradeRecord.setPhone(saveTradeRecordRequestDto.getPhone());
+            tradeRecord.setCost(saveTradeRecordRequestDto.getCost());
+            tradeRecord.setType(saveTradeRecordRequestDto.getType());
+            tradeRecord.setOriginalSerial(saveTradeRecordRequestDto.getSerialNo());
             tradeRecordRepository.save(tradeRecord);
             TradeSpec tradeSpec;
-            int length = saveTradeGoodsRequestDto.getUpc().length;
+            int length = saveTradeRecordRequestDto.getUpc().length;
             for (int i = 0; i < length; i++) {
                 tradeSpec = new TradeSpec();
-                tradeSpec.setUpc(saveTradeGoodsRequestDto.getUpc()[i]);
-                tradeSpec.setName(saveTradeGoodsRequestDto.getName()[i]);
-                tradeSpec.setPrimeCost(saveTradeGoodsRequestDto.getPrimeCost()[i]);
-                tradeSpec.setPresentCost(saveTradeGoodsRequestDto.getPresentCost()[i]);
-                tradeSpec.setQuantity(saveTradeGoodsRequestDto.getQuantity()[i]);
+                tradeSpec.setUpc(saveTradeRecordRequestDto.getUpc()[i]);
+                tradeSpec.setName(saveTradeRecordRequestDto.getName()[i]);
+                tradeSpec.setPrimeCost(saveTradeRecordRequestDto.getPrimeCost()[i]);
+                tradeSpec.setPresentCost(saveTradeRecordRequestDto.getPresentCost()[i]);
+                tradeSpec.setQuantity(saveTradeRecordRequestDto.getQuantity()[i]);
                 tradeSpec.setSerialNo(tradeRecord.getSerialNo());
                 tradeSpecRepository.save(tradeSpec);
             }
-            saveTradeGoodsResponseDto.setCode(ResultCode.OK);
+            saveTradeRecordResponseDto.setCode(ResultCode.OK);
         } catch (Exception e) {
-            saveTradeGoodsResponseDto.setMessage(e.getMessage());
-            saveTradeGoodsResponseDto.setCode(ResultCode.ERROR);
+            saveTradeRecordResponseDto.setMessage(e.getMessage());
+            saveTradeRecordResponseDto.setCode(ResultCode.ERROR);
             Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
-        return saveTradeGoodsResponseDto;
+        return saveTradeRecordResponseDto;
     }
 
     /**
@@ -139,7 +139,7 @@ public class TradeController {
                 @Override
                 public Predicate toPredicate(Root<TradeRecord> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                     List<Predicate> predicates = new ArrayList<>();
-                    if (!queryTradeRecordRequestDto.getKeyword().equals("")) {
+                    if (!queryTradeRecordRequestDto.getStaffNo().equals("")) {
                         predicates.add(cb.equal(root.get("staffNo"), queryTradeRecordRequestDto.getStaffNo()));
                     }
                     if (queryTradeRecordRequestDto.getStartDate() != null) {

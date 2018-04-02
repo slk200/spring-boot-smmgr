@@ -13,10 +13,12 @@ public class LossRecord {
     private String staffNo;
     //牌号
     @Column(nullable = false)
-    private Integer markNo;
+    private String markNo;
     //总额
     @Column(nullable = false)
     private Double cost;
+    //备注
+    private String note;
     //生成时间
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -38,11 +40,11 @@ public class LossRecord {
         this.staffNo = staffNo;
     }
 
-    public Integer getMarkNo() {
+    public String getMarkNo() {
         return markNo;
     }
 
-    public void setMarkNo(Integer markNo) {
+    public void setMarkNo(String markNo) {
         this.markNo = markNo;
     }
 
@@ -52,6 +54,14 @@ public class LossRecord {
 
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Date getCreateAt() {

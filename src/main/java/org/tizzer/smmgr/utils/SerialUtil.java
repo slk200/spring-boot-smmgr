@@ -22,4 +22,9 @@ public class SerialUtil {
         Future<List<Object>> future = pool.submit(serialCallable.createRefundCallable());
         return future.get();
     }
+
+    public static List<Object> getLossSerialNo() throws ExecutionException, InterruptedException {
+        Future<List<Object>> future = pool.submit(serialCallable.createLossCallable());
+        return future.get();
+    }
 }
