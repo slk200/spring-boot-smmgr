@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.tizzer.smmgr.entity.Store;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 public interface StoreRepository extends JpaRepository<Store, Integer>, JpaSpecificationExecutor<Store> {
 
@@ -15,5 +16,7 @@ public interface StoreRepository extends JpaRepository<Store, Integer>, JpaSpeci
     @Transactional
     @Query(value = "update store s set s.name=:name,s.address=:address where s.id=:id", nativeQuery = true)
     void updateStore(@Param("id") Long id, @Param("name") String name, @Param("address") String address);
+
+    List<Store> findAllByIdIsNot(Integer id);
 
 }

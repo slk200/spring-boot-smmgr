@@ -12,6 +12,7 @@ import org.tizzer.smmgr.entity.Employee;
 import org.tizzer.smmgr.model.request.LoginRequestDto;
 import org.tizzer.smmgr.model.response.LoginResponseDto;
 import org.tizzer.smmgr.repository.EmployeeRepository;
+import org.tizzer.smmgr.utils.MD5Util;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,7 +34,7 @@ public class LoginController {
         RequestContext requestContext = new RequestContext(request);
         LoginResponseDto loginResponseDto = new LoginResponseDto();
         try {
-            Employee employee = employeeRepository.findByStaffNoAndPassword(loginRequestDto.getStaffNo(), loginRequestDto.getPassword());
+            Employee employee = employeeRepository.findByStaffNoAndPassword(loginRequestDto.getStaffNo(), MD5Util.encoder(loginRequestDto.getPassword()));
             if (employee != null) {
                 if (employee.getEnable()) {
                     loginResponseDto.setStoreId(employee.getStore().getId());

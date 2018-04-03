@@ -35,6 +35,31 @@ public class StoreController {
     StoreRepository storeRepository;
 
     /**
+     * 保存门店
+     *
+     * @param saveStoreRequestDto
+     * @return
+     */
+    @PostMapping(path = "/save/store")
+    public SaveStoreResponseDto saveStore(SaveStoreRequestDto saveStoreRequestDto) {
+        SaveStoreResponseDto saveStoreResponseDto = new SaveStoreResponseDto();
+        try {
+            Store store = new Store();
+            store.setName(saveStoreRequestDto.getName());
+            store.setAddress(saveStoreRequestDto.getAddress());
+            store.setFoundDate(new Date());
+            storeRepository.save(store);
+            saveStoreResponseDto.setCode(ResultCode.OK);
+        } catch (Exception e) {
+            saveStoreResponseDto.setMessage(e.getMessage());
+            saveStoreResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
+        }
+        return saveStoreResponseDto;
+    }
+
+    /**
      * 查询满足条件的所有门店
      *
      * @param queryStoreRequestDto
@@ -86,28 +111,25 @@ public class StoreController {
     }
 
     /**
-     * 保存门店
+     * 查询除本店外的所有分店
      *
-     * @param saveStoreRequestDto
+     * @param queryOtherStoreRequestDto
      * @return
      */
-    @PostMapping(path = "/save/store")
-    public SaveStoreResponseDto saveStore(SaveStoreRequestDto saveStoreRequestDto) {
-        SaveStoreResponseDto saveStoreResponseDto = new SaveStoreResponseDto();
+    @GetMapping(path = "/query/store/other")
+    public QueryOtherStoreResponseDto<Store> queryOtherStore(QueryOtherStoreRequestDto queryOtherStoreRequestDto) {
+        QueryOtherStoreResponseDto<Store> queryOtherStoreResponseDto = new QueryOtherStoreResponseDto<>();
         try {
-            Store store = new Store();
-            store.setName(saveStoreRequestDto.getName());
-            store.setAddress(saveStoreRequestDto.getAddress());
-            store.setFoundDate(new Date());
-            storeRepository.save(store);
-            saveStoreResponseDto.setCode(ResultCode.OK);
+            List<Store> stores = storeRepository.findAllByIdIsNot(queryOtherStoreRequestDto.getStoreId());
+            queryOtherStoreResponseDto.setData(stores);
+            queryOtherStoreResponseDto.setCode(ResultCode.OK);
         } catch (Exception e) {
-            saveStoreResponseDto.setMessage(e.getMessage());
-            saveStoreResponseDto.setCode(ResultCode.ERROR);
+            queryOtherStoreResponseDto.setMessage(e.getMessage());
+            queryOtherStoreResponseDto.setCode(ResultCode.ERROR);
             Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
-        return saveStoreResponseDto;
+        return queryOtherStoreResponseDto;
     }
 
     /**

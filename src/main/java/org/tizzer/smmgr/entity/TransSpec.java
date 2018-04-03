@@ -3,7 +3,7 @@ package org.tizzer.smmgr.entity;
 import javax.persistence.*;
 
 @Entity
-public class BookSpec {
+public class TransSpec {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

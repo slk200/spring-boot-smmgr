@@ -23,6 +23,7 @@ import org.tizzer.smmgr.model.response.SaveEmployeeResponseDto;
 import org.tizzer.smmgr.model.response.UpdateEmployeeResponseDto;
 import org.tizzer.smmgr.repository.EmployeeRepository;
 import org.tizzer.smmgr.repository.StoreRepository;
+import org.tizzer.smmgr.utils.MD5Util;
 import org.tizzer.smmgr.utils.TimeUtil;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -42,6 +43,38 @@ public class EmployeeController {
 
     @Autowired
     StoreRepository storeRepository;
+
+    /**
+     * 保存员工
+     *
+     * @param saveEmployeeRequestDto
+     * @return
+     */
+    @PostMapping(path = "/save/employee")
+    public SaveEmployeeResponseDto saveEmployee(SaveEmployeeRequestDto saveEmployeeRequestDto) {
+        SaveEmployeeResponseDto saveEmployeeResponseDto = new SaveEmployeeResponseDto();
+        try {
+            Store store = storeRepository.findOne(saveEmployeeRequestDto.getStoreId());
+            Employee employee = new Employee();
+            employee.setStaffNo(saveEmployeeRequestDto.getStaffNo());
+            employee.setPassword(MD5Util.encoder(saveEmployeeRequestDto.getPassword()));
+            employee.setName(saveEmployeeRequestDto.getName());
+            employee.setPhone(saveEmployeeRequestDto.getPhone());
+            employee.setAddress(saveEmployeeRequestDto.getAddress());
+            employee.setAdmin(saveEmployeeRequestDto.getAdmin());
+            employee.setCreateAt(new Date());
+            employee.setStore(store);
+            employee.setEnable(true);
+            employeeRepository.save(employee);
+            saveEmployeeResponseDto.setCode(ResultCode.OK);
+        } catch (Exception e) {
+            saveEmployeeResponseDto.setMessage(e.getMessage());
+            saveEmployeeResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
+        }
+        return saveEmployeeResponseDto;
+    }
 
     /**
      * 查询满足条件的所有员工
@@ -98,39 +131,6 @@ public class EmployeeController {
             e.printStackTrace();
         }
         return res;
-    }
-
-    /**
-     * 保存员工
-     *
-     * @param saveEmployeeRequestDto
-     * @return
-     */
-    @PostMapping(path = "/save/employee")
-    public SaveEmployeeResponseDto saveEmployee(SaveEmployeeRequestDto saveEmployeeRequestDto) {
-        SaveEmployeeResponseDto saveEmployeeResponseDto = new SaveEmployeeResponseDto();
-        try {
-            Store store = storeRepository.findOne(saveEmployeeRequestDto.getStoreId());
-            Employee employee = new Employee();
-            employee.setStaffNo(saveEmployeeRequestDto.getStaffNo());
-            employee.setPassword(saveEmployeeRequestDto.getPassword());
-            employee.setName(saveEmployeeRequestDto.getName());
-            employee.setPhone(saveEmployeeRequestDto.getPhone());
-            employee.setAddress(saveEmployeeRequestDto.getAddress());
-            employee.setAdmin(saveEmployeeRequestDto.getAdmin());
-            System.out.println(saveEmployeeRequestDto.getAdmin());
-            employee.setCreateAt(new Date());
-            employee.setStore(store);
-            employee.setEnable(true);
-            employeeRepository.save(employee);
-            saveEmployeeResponseDto.setCode(ResultCode.OK);
-        } catch (Exception e) {
-            saveEmployeeResponseDto.setMessage(e.getMessage());
-            saveEmployeeResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
-        }
-        return saveEmployeeResponseDto;
     }
 
     /**

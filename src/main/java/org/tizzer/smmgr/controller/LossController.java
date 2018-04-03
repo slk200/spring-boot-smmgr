@@ -17,8 +17,10 @@ import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.LossRecord;
 import org.tizzer.smmgr.entity.LossSpec;
 import org.tizzer.smmgr.model.request.QueryLossRecordRequestDto;
+import org.tizzer.smmgr.model.request.QueryLossSpecRequestDto;
 import org.tizzer.smmgr.model.request.SaveLossRecordRequestDto;
 import org.tizzer.smmgr.model.response.QueryLossRecordResponseDto;
+import org.tizzer.smmgr.model.response.QueryLossSpecResponseDto;
 import org.tizzer.smmgr.model.response.ResultListResponse;
 import org.tizzer.smmgr.model.response.SaveLossRecordResponseDto;
 import org.tizzer.smmgr.repository.LossRecordRepository;
@@ -85,6 +87,12 @@ public class LossController {
         return saveLossRecordResponseDto;
     }
 
+    /**
+     * 查询报损记录
+     *
+     * @param queryLossRecordRequestDto
+     * @return
+     */
     @GetMapping(path = "/query/loss/record")
     public ResultListResponse<QueryLossRecordResponseDto> queryLossRecord(QueryLossRecordRequestDto queryLossRecordRequestDto) {
         ResultListResponse<QueryLossRecordResponseDto> res = new ResultListResponse<>();
@@ -127,6 +135,31 @@ public class LossController {
             e.printStackTrace();
         }
         return res;
+    }
+
+    /**
+     * 查询报损详情
+     *
+     * @param queryLossSpecRequestDto
+     * @return
+     */
+    @GetMapping(path = "/query/loss/spec")
+    public QueryLossSpecResponseDto<LossSpec> queryLossSpec(QueryLossSpecRequestDto queryLossSpecRequestDto) {
+        QueryLossSpecResponseDto<LossSpec> queryLossSpecResponseDto = new QueryLossSpecResponseDto<>();
+        try {
+            LossRecord lossRecord = lossRecordRepository.findOne(queryLossSpecRequestDto.getId());
+            List<LossSpec> lossSpecs = lossSpecRepository.findAllBySerialNo(queryLossSpecRequestDto.getId());
+            queryLossSpecResponseDto.setData(lossSpecs);
+            queryLossSpecResponseDto.setCost(lossRecord.getCost());
+            queryLossSpecResponseDto.setNote(lossRecord.getNote());
+            queryLossSpecResponseDto.setCode(ResultCode.OK);
+        } catch (Exception e) {
+            queryLossSpecResponseDto.setMessage(e.getMessage());
+            queryLossSpecResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
+        }
+        return queryLossSpecResponseDto;
     }
 
 }

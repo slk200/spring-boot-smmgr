@@ -41,6 +41,45 @@ public class GoodsController {
     GoodsTypeRepository goodsTypeRepository;
 
     /**
+     * 保存商品
+     *
+     * @param saveGoodsRequestDto
+     * @return
+     */
+    @PostMapping(path = "/save/goods")
+    public SaveGoodsResponseDto saveGoods(SaveGoodsRequestDto saveGoodsRequestDto) {
+        SaveGoodsResponseDto saveGoodsResponseDto = new SaveGoodsResponseDto();
+        try {
+            GoodsType goodsType = new GoodsType();
+            if (saveGoodsRequestDto.getId() == -1) {
+                goodsType.setName(saveGoodsRequestDto.getName());
+                goodsType = goodsTypeRepository.save(goodsType);
+            } else {
+                goodsType.setId(saveGoodsRequestDto.getId());
+                goodsType.setName(saveGoodsRequestDto.getName());
+            }
+            Goods goods = new Goods();
+            goods.setUpc(saveGoodsRequestDto.getUpc());
+            goods.setName(saveGoodsRequestDto.getName());
+            goods.setSpell(saveGoodsRequestDto.getSpell());
+            goods.setGoodsType(goodsType);
+            goods.setInventory(saveGoodsRequestDto.getInvention());
+            goods.setjPrice(saveGoodsRequestDto.getjPrice());
+            goods.setsPrice(saveGoodsRequestDto.getsPrice());
+            goods.setScDate(TimeUtil.string2Day(saveGoodsRequestDto.getScDate()));
+            goods.setBzDate(saveGoodsRequestDto.getBzDate());
+            goodsRepository.save(goods);
+            saveGoodsResponseDto.setCode(ResultCode.OK);
+        } catch (Exception e) {
+            saveGoodsResponseDto.setMessage(e.getMessage());
+            saveGoodsResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
+        }
+        return saveGoodsResponseDto;
+    }
+
+    /**
      * 查询所有商品类型
      *
      * @return
@@ -161,44 +200,5 @@ public class GoodsController {
             e.printStackTrace();
         }
         return queryTradeGoodsResponseDto;
-    }
-
-    /**
-     * 保存商品
-     *
-     * @param saveGoodsRequestDto
-     * @return
-     */
-    @PostMapping(path = "/save/goods")
-    public SaveGoodsResponseDto saveGoods(SaveGoodsRequestDto saveGoodsRequestDto) {
-        SaveGoodsResponseDto saveGoodsResponseDto = new SaveGoodsResponseDto();
-        try {
-            GoodsType goodsType = new GoodsType();
-            if (saveGoodsRequestDto.getId() == -1) {
-                goodsType.setName(saveGoodsRequestDto.getName());
-                goodsType = goodsTypeRepository.save(goodsType);
-            } else {
-                goodsType.setId(saveGoodsRequestDto.getId());
-                goodsType.setName(saveGoodsRequestDto.getName());
-            }
-            Goods goods = new Goods();
-            goods.setUpc(saveGoodsRequestDto.getUpc());
-            goods.setName(saveGoodsRequestDto.getName());
-            goods.setSpell(saveGoodsRequestDto.getSpell());
-            goods.setGoodsType(goodsType);
-            goods.setInventory(saveGoodsRequestDto.getInvention());
-            goods.setjPrice(saveGoodsRequestDto.getjPrice());
-            goods.setsPrice(saveGoodsRequestDto.getsPrice());
-            goods.setScDate(TimeUtil.string2Day(saveGoodsRequestDto.getScDate()));
-            goods.setBzDate(saveGoodsRequestDto.getBzDate());
-            goodsRepository.save(goods);
-            saveGoodsResponseDto.setCode(ResultCode.OK);
-        } catch (Exception e) {
-            saveGoodsResponseDto.setMessage(e.getMessage());
-            saveGoodsResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
-        }
-        return saveGoodsResponseDto;
     }
 }

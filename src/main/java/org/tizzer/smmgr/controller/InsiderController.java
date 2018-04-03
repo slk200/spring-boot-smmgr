@@ -42,27 +42,6 @@ public class InsiderController {
     InsiderTypeRepository insiderTypeRepository;
 
     /**
-     * 查询所有会员类型
-     *
-     * @return
-     */
-    @GetMapping(path = "/query/insider/type")
-    public QueryAllInsiderTypeResponseDto<InsiderType> queryAllInsiderType() {
-        QueryAllInsiderTypeResponseDto<InsiderType> queryAllInsiderTypeResponseDto = new QueryAllInsiderTypeResponseDto<>();
-        try {
-            List<InsiderType> insiderTypes = insiderTypeRepository.findAll();
-            queryAllInsiderTypeResponseDto.setData(insiderTypes);
-            queryAllInsiderTypeResponseDto.setCode(ResultCode.OK);
-        } catch (Exception e) {
-            queryAllInsiderTypeResponseDto.setMessage(e.getMessage());
-            queryAllInsiderTypeResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
-        }
-        return queryAllInsiderTypeResponseDto;
-    }
-
-    /**
      * 保存会员类型
      *
      * @param saveInsiderTypeRequestDto
@@ -84,6 +63,27 @@ public class InsiderController {
             e.printStackTrace();
         }
         return saveInsiderTypeResponseDto;
+    }
+
+    /**
+     * 查询所有会员类型
+     *
+     * @return
+     */
+    @GetMapping(path = "/query/insider/type")
+    public QueryAllInsiderTypeResponseDto<InsiderType> queryAllInsiderType() {
+        QueryAllInsiderTypeResponseDto<InsiderType> queryAllInsiderTypeResponseDto = new QueryAllInsiderTypeResponseDto<>();
+        try {
+            List<InsiderType> insiderTypes = insiderTypeRepository.findAll();
+            queryAllInsiderTypeResponseDto.setData(insiderTypes);
+            queryAllInsiderTypeResponseDto.setCode(ResultCode.OK);
+        } catch (Exception e) {
+            queryAllInsiderTypeResponseDto.setMessage(e.getMessage());
+            queryAllInsiderTypeResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
+        }
+        return queryAllInsiderTypeResponseDto;
     }
 
     /**
@@ -145,6 +145,49 @@ public class InsiderController {
     }
 
     /**
+     * 保存会员
+     *
+     * @param saveInsiderRequestDto
+     * @return
+     */
+    @PostMapping(path = "/save/insider")
+    public SaveInsiderResponseDto saveInsider(HttpServletRequest request, SaveInsiderRequestDto saveInsiderRequestDto) {
+        RequestContext requestContext = new RequestContext(request);
+        SaveInsiderResponseDto saveInsiderResponseDto = new SaveInsiderResponseDto();
+        try {
+            Insider savedInsider = insiderRepository.findByPhone(saveInsiderRequestDto.getPhone());
+            if (savedInsider != null) {
+                saveInsiderResponseDto.setMessage(requestContext.getMessage("msg.save.insider.result.error"));
+                saveInsiderResponseDto.setCode(ResultCode.ERROR);
+            } else {
+                Insider toSaveInsider = new Insider();
+                toSaveInsider.setCardNo(saveInsiderRequestDto.getCardNo());
+                toSaveInsider.setName(saveInsiderRequestDto.getName());
+                toSaveInsider.setPhone(saveInsiderRequestDto.getPhone());
+                toSaveInsider.setInsiderType(insiderTypeRepository.findOne(saveInsiderRequestDto.getType()));
+                if (saveInsiderRequestDto.getAddress() != null || !Objects.equals(saveInsiderRequestDto.getAddress(), "")) {
+                    toSaveInsider.setAddress(saveInsiderRequestDto.getAddress());
+                }
+                if (saveInsiderRequestDto.getNote() != null || !Objects.equals(saveInsiderRequestDto.getNote(), "")) {
+                    toSaveInsider.setNote(saveInsiderRequestDto.getNote());
+                }
+                if (saveInsiderRequestDto.getBirth() != null) {
+                    toSaveInsider.setBirth(TimeUtil.string2Day(saveInsiderRequestDto.getBirth()));
+                }
+                toSaveInsider.setCreateAt(new Date());
+                insiderRepository.save(toSaveInsider);
+                saveInsiderResponseDto.setCode(ResultCode.OK);
+            }
+        } catch (Exception e) {
+            saveInsiderResponseDto.setMessage(e.getMessage());
+            saveInsiderResponseDto.setCode(ResultCode.ERROR);
+            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            e.printStackTrace();
+        }
+        return saveInsiderResponseDto;
+    }
+
+    /**
      * 查询满足条件的所有会员
      *
      * @param querySomeInsiderRequestDto
@@ -199,49 +242,6 @@ public class InsiderController {
             e.printStackTrace();
         }
         return res;
-    }
-
-    /**
-     * 保存会员
-     *
-     * @param saveInsiderRequestDto
-     * @return
-     */
-    @PostMapping(path = "/save/insider")
-    public SaveInsiderResponseDto saveInsider(HttpServletRequest request, SaveInsiderRequestDto saveInsiderRequestDto) {
-        RequestContext requestContext = new RequestContext(request);
-        SaveInsiderResponseDto saveInsiderResponseDto = new SaveInsiderResponseDto();
-        try {
-            Insider savedInsider = insiderRepository.findByPhone(saveInsiderRequestDto.getPhone());
-            if (savedInsider != null) {
-                saveInsiderResponseDto.setMessage(requestContext.getMessage("msg.save.insider.result.error"));
-                saveInsiderResponseDto.setCode(ResultCode.ERROR);
-            } else {
-                Insider toSaveInsider = new Insider();
-                toSaveInsider.setCardNo(saveInsiderRequestDto.getCardNo());
-                toSaveInsider.setName(saveInsiderRequestDto.getName());
-                toSaveInsider.setPhone(saveInsiderRequestDto.getPhone());
-                toSaveInsider.setInsiderType(insiderTypeRepository.findOne(saveInsiderRequestDto.getType()));
-                if (saveInsiderRequestDto.getAddress() != null || !Objects.equals(saveInsiderRequestDto.getAddress(), "")) {
-                    toSaveInsider.setAddress(saveInsiderRequestDto.getAddress());
-                }
-                if (saveInsiderRequestDto.getNote() != null || !Objects.equals(saveInsiderRequestDto.getNote(), "")) {
-                    toSaveInsider.setNote(saveInsiderRequestDto.getNote());
-                }
-                if (saveInsiderRequestDto.getBirth() != null) {
-                    toSaveInsider.setBirth(TimeUtil.string2Day(saveInsiderRequestDto.getBirth()));
-                }
-                toSaveInsider.setCreateAt(new Date());
-                insiderRepository.save(toSaveInsider);
-                saveInsiderResponseDto.setCode(ResultCode.OK);
-            }
-        } catch (Exception e) {
-            saveInsiderResponseDto.setMessage(e.getMessage());
-            saveInsiderResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
-            e.printStackTrace();
-        }
-        return saveInsiderResponseDto;
     }
 
     /**

@@ -5,6 +5,6 @@ import org.tizzer.smmgr.entity.TradeSpec;
 
 import java.util.List;
 
-public interface TradeSpecRepository extends JpaRepository<TradeSpec, String> {
+public interface TradeSpecRepository extends JpaRepository<TradeSpec, Long> {
     List<TradeSpec> findAllBySerialNo(String serialNo);
 }

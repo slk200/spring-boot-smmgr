@@ -21,6 +21,8 @@ public class Store {
     private Date foundDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "store")
     private List<Employee> employees;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "store")
+    private List<TransRecord> transRecords;
 
     public Integer getId() {
         return id;
