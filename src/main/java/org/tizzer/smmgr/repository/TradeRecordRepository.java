@@ -10,9 +10,9 @@ public interface TradeRecordRepository extends JpaRepository<TradeRecord, String
     @Query(value = "select original_serial from trade_record tr where tr.original_serial=:originalSerial", nativeQuery = true)
     String isExist(@Param("originalSerial") String originalSerial);
 
-    @Query(value = "select sum(cost) from trade_record where card_no is null", nativeQuery = true)
+    @Query(value = "select sum(cost) from trade_record where card_no is null and date_sub(curdate(), interval 30 day) <= date(sold_time)", nativeQuery = true)
     Double getConsumerCost();
 
-    @Query(value = "select sum(cost) from trade_record where card_no is not null", nativeQuery = true)
+    @Query(value = "select sum(cost) from trade_record where card_no is not null and date_sub(curdate(), interval 30 day) <= date(sold_time)", nativeQuery = true)
     Double getInsiderCost();
 }
