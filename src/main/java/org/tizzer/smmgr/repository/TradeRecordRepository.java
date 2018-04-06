@@ -15,4 +15,7 @@ public interface TradeRecordRepository extends JpaRepository<TradeRecord, String
 
     @Query(value = "select sum(cost) from trade_record where card_no is not null and date_sub(curdate(), interval 30 day) <= date(sold_time)", nativeQuery = true)
     Double getInsiderCost();
+
+    @Query(value = "select sum(cost) from trade_record where pay_type=:payType and date_sub(curdate(), interval 30 day) <= date(sold_time)", nativeQuery = true)
+    Double getPayTypeCost(@Param("payType") String payType);
 }
