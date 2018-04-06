@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.RequestContext;
 import org.tizzer.smmgr.common.LogLevel;
 import org.tizzer.smmgr.common.Logcat;
 import org.tizzer.smmgr.constant.ResultCode;
@@ -30,6 +31,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,19 +53,26 @@ public class EmployeeController {
      * @return
      */
     @PostMapping(path = "/save/employee")
-    public SaveEmployeeResponseDto saveEmployee(SaveEmployeeRequestDto saveEmployeeRequestDto) {
+    public SaveEmployeeResponseDto saveEmployee(HttpServletRequest request,SaveEmployeeRequestDto saveEmployeeRequestDto) {
+        RequestContext requestContext = new RequestContext(request);
         SaveEmployeeResponseDto saveEmployeeResponseDto = new SaveEmployeeResponseDto();
         try {
-            Store store = storeRepository.findOne(saveEmployeeRequestDto.getStoreId());
+            String staffNo = saveEmployeeRequestDto.getStaffNo();
+            if (employeeRepository.exists(staffNo)) {
+                saveEmployeeResponseDto.setMessage(requestContext.getMessage("msg.add.employee.result.error"));
+                saveEmployeeResponseDto.setCode(ResultCode.ERROR);
+                return saveEmployeeResponseDto;
+            }
             Employee employee = new Employee();
-            employee.setStaffNo(saveEmployeeRequestDto.getStaffNo());
+            Store store = storeRepository.findOne(saveEmployeeRequestDto.getStoreId());
+            employee.setStore(store);
+            employee.setStaffNo(staffNo);
             employee.setPassword(MD5Util.encoder(saveEmployeeRequestDto.getPassword()));
             employee.setName(saveEmployeeRequestDto.getName());
             employee.setPhone(saveEmployeeRequestDto.getPhone());
             employee.setAddress(saveEmployeeRequestDto.getAddress());
             employee.setAdmin(saveEmployeeRequestDto.getAdmin());
             employee.setCreateAt(new Date());
-            employee.setStore(store);
             employee.setEnable(true);
             employeeRepository.save(employee);
             saveEmployeeResponseDto.setCode(ResultCode.OK);

@@ -29,8 +29,8 @@ public class AnalysisController {
     public IdentityCostResponseDto identityCost() {
         IdentityCostResponseDto identityCostResponseDto = new IdentityCostResponseDto();
         try {
-            double consumerCost = tradeRecordRepository.getConsumerCost();
-            double insiderCost = tradeRecordRepository.getInsiderCost();
+            Double consumerCost = tradeRecordRepository.getConsumerCost();
+            Double insiderCost = tradeRecordRepository.getInsiderCost();
             identityCostResponseDto.setConsumerCost(consumerCost);
             identityCostResponseDto.setInsiderCost(insiderCost);
             identityCostResponseDto.setCode(ResultCode.OK);
