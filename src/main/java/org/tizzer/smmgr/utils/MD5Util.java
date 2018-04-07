@@ -12,7 +12,7 @@ public class MD5Util {
      * @return
      */
     public static String encoder(String plainText) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             byte[] stream = messageDigest.digest(plainText.getBytes());
@@ -22,11 +22,11 @@ public class MD5Util {
                 if (hexString.length() < 2) {
                     hexString = "0" + hexString;
                 }
-                result += hexString;
+                result.append(hexString);
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        return result;
+        return result.toString();
     }
 }
