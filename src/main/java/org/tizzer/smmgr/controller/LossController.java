@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tizzer.smmgr.common.LogLevel;
-import org.tizzer.smmgr.common.Logcat;
+import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.LossRecord;
 import org.tizzer.smmgr.entity.LossSpec;
@@ -40,11 +40,14 @@ import java.util.List;
 @RequestMapping(path = "/smmgr")
 public class LossController {
 
-    @Autowired
-    LossRecordRepository lossRecordRepository;
+    private final LossRecordRepository lossRecordRepository;
+    private final LossSpecRepository lossSpecRepository;
 
     @Autowired
-    LossSpecRepository lossSpecRepository;
+    public LossController(LossRecordRepository lossRecordRepository, LossSpecRepository lossSpecRepository) {
+        this.lossRecordRepository = lossRecordRepository;
+        this.lossSpecRepository = lossSpecRepository;
+    }
 
     /**
      * 保存报损记录
@@ -81,7 +84,7 @@ public class LossController {
         } catch (Exception e) {
             saveLossRecordResponseDto.setMessage(e.getMessage());
             saveLossRecordResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return saveLossRecordResponseDto;
@@ -131,7 +134,7 @@ public class LossController {
         } catch (Exception e) {
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return res;
@@ -156,7 +159,7 @@ public class LossController {
         } catch (Exception e) {
             queryLossSpecResponseDto.setMessage(e.getMessage());
             queryLossSpecResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryLossSpecResponseDto;

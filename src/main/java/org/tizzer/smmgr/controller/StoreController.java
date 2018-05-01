@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tizzer.smmgr.common.LogLevel;
-import org.tizzer.smmgr.common.Logcat;
+import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.Store;
 import org.tizzer.smmgr.model.request.*;
@@ -31,8 +31,12 @@ import java.util.List;
 @RequestMapping(path = "/smmgr")
 public class StoreController {
 
+    private final StoreRepository storeRepository;
+
     @Autowired
-    StoreRepository storeRepository;
+    public StoreController(StoreRepository storeRepository) {
+        this.storeRepository = storeRepository;
+    }
 
     /**
      * 保存门店
@@ -53,7 +57,7 @@ public class StoreController {
         } catch (Exception e) {
             saveStoreResponseDto.setMessage(e.getMessage());
             saveStoreResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return saveStoreResponseDto;
@@ -104,7 +108,7 @@ public class StoreController {
         } catch (Exception e) {
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return res;
@@ -126,7 +130,7 @@ public class StoreController {
         } catch (Exception e) {
             queryOtherStoreResponseDto.setMessage(e.getMessage());
             queryOtherStoreResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryOtherStoreResponseDto;
@@ -151,7 +155,7 @@ public class StoreController {
         } catch (Exception e) {
             queryOneStoreResponseDto.setMessage(e.getMessage());
             queryOneStoreResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryOneStoreResponseDto;
@@ -172,7 +176,7 @@ public class StoreController {
         } catch (Exception e) {
             updateStoreResponseDto.setMessage(e.getMessage());
             updateStoreResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return updateStoreResponseDto;
@@ -196,7 +200,7 @@ public class StoreController {
         } catch (Exception e) {
             deleteStoreResponseDto.setMessage(e.getMessage());
             deleteStoreResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return deleteStoreResponseDto;

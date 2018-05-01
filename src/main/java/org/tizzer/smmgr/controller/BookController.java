@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tizzer.smmgr.common.LogLevel;
-import org.tizzer.smmgr.common.Logcat;
+import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.BookRecord;
 import org.tizzer.smmgr.entity.BookSpec;
@@ -39,11 +39,14 @@ import java.util.List;
 @RequestMapping(path = "/smmgr")
 public class BookController {
 
-    @Autowired
-    BookRecordRepository bookRecordRepository;
+    private final BookRecordRepository bookRecordRepository;
+    private final BookSpecRepository bookSpecRepository;
 
     @Autowired
-    BookSpecRepository bookSpecRepository;
+    public BookController(BookRecordRepository bookRecordRepository, BookSpecRepository bookSpecRepository) {
+        this.bookRecordRepository = bookRecordRepository;
+        this.bookSpecRepository = bookSpecRepository;
+    }
 
     /**
      * 保存订货记录
@@ -76,7 +79,7 @@ public class BookController {
         } catch (Exception e) {
             saveBookRecordResponseDto.setMessage(e.getMessage());
             saveBookRecordResponseDto.setCode(ResultCode.OK);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return saveBookRecordResponseDto;
@@ -122,7 +125,7 @@ public class BookController {
         } catch (Exception e) {
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.OK);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return res;
@@ -147,7 +150,7 @@ public class BookController {
         } catch (Exception e) {
             queryBookSpecResponseDto.setMessage(e.getMessage());
             queryBookSpecResponseDto.setCode(ResultCode.OK);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryBookSpecResponseDto;

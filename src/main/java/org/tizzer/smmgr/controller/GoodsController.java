@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tizzer.smmgr.common.LogLevel;
-import org.tizzer.smmgr.common.Logcat;
+import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.Goods;
 import org.tizzer.smmgr.entity.GoodsType;
@@ -34,11 +34,14 @@ import java.util.List;
 @RequestMapping(path = "/smmgr")
 public class GoodsController {
 
-    @Autowired
-    GoodsRepository goodsRepository;
+    private final GoodsRepository goodsRepository;
+    private final GoodsTypeRepository goodsTypeRepository;
 
     @Autowired
-    GoodsTypeRepository goodsTypeRepository;
+    public GoodsController(GoodsRepository goodsRepository, GoodsTypeRepository goodsTypeRepository) {
+        this.goodsRepository = goodsRepository;
+        this.goodsTypeRepository = goodsTypeRepository;
+    }
 
     /**
      * 保存商品
@@ -73,7 +76,7 @@ public class GoodsController {
         } catch (Exception e) {
             saveGoodsResponseDto.setMessage(e.getMessage());
             saveGoodsResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return saveGoodsResponseDto;
@@ -94,7 +97,7 @@ public class GoodsController {
         } catch (Exception e) {
             queryAllGoodsTypeResponseDto.setMessage(e.getMessage());
             queryAllGoodsTypeResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryAllGoodsTypeResponseDto;
@@ -140,7 +143,7 @@ public class GoodsController {
         } catch (Exception e) {
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return res;
@@ -170,7 +173,7 @@ public class GoodsController {
         } catch (Exception e) {
             queryOneGoodsResponseDto.setMessage(e.getMessage());
             queryOneGoodsResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryOneGoodsResponseDto;
@@ -196,7 +199,7 @@ public class GoodsController {
         } catch (Exception e) {
             queryTradeGoodsResponseDto.setMessage(e.getMessage());
             queryTradeGoodsResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryTradeGoodsResponseDto;

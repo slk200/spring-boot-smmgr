@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.RequestContext;
 import org.tizzer.smmgr.common.LogLevel;
-import org.tizzer.smmgr.common.Logcat;
+import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.Employee;
 import org.tizzer.smmgr.model.request.LoginRequestDto;
@@ -20,8 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(path = "/smmgr")
 public class LoginController {
 
+    private final EmployeeRepository employeeRepository;
+
     @Autowired
-    EmployeeRepository employeeRepository;
+    public LoginController(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     /**
      * 登录校验
@@ -51,7 +55,7 @@ public class LoginController {
         } catch (Exception e) {
             loginResponseDto.setMessage(e.getMessage());
             loginResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return loginResponseDto;

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tizzer.smmgr.common.LogLevel;
-import org.tizzer.smmgr.common.Logcat;
+import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.model.analysis.IdentityCostResponseDto;
 import org.tizzer.smmgr.model.analysis.PayTypeCostResponseDto;
@@ -19,11 +19,14 @@ import java.util.List;
 @RequestMapping(path = "/smmgr")
 public class AnalysisController {
 
-    @Autowired
-    TradeRecordRepository tradeRecordRepository;
+    private final TradeRecordRepository tradeRecordRepository;
+    private final PayTypeRepository payTypeRepository;
 
     @Autowired
-    PayTypeRepository payTypeRepository;
+    public AnalysisController(PayTypeRepository payTypeRepository, TradeRecordRepository tradeRecordRepository) {
+        this.payTypeRepository = payTypeRepository;
+        this.tradeRecordRepository = tradeRecordRepository;
+    }
 
     @GetMapping(path = "/analysis/identity")
     public IdentityCostResponseDto identityCost() {
@@ -37,7 +40,7 @@ public class AnalysisController {
         } catch (Exception e) {
             identityCostResponseDto.setMessage(e.getMessage());
             identityCostResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return identityCostResponseDto;
@@ -60,7 +63,7 @@ public class AnalysisController {
         } catch (Exception e) {
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return res;

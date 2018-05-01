@@ -6,6 +6,11 @@ import java.util.Date;
 
 public class TimeUtil {
 
+    /**
+     * 字符串转时间
+     * @param date
+     * @return
+     */
     public static Date string2Day(String date) {
         try {
             return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);

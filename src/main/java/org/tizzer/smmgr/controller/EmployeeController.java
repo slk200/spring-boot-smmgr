@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.RequestContext;
 import org.tizzer.smmgr.common.LogLevel;
-import org.tizzer.smmgr.common.Logcat;
+import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.Employee;
 import org.tizzer.smmgr.entity.Store;
@@ -40,11 +40,14 @@ import java.util.List;
 @RequestMapping(path = "/smmgr")
 public class EmployeeController {
 
-    @Autowired
-    EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
+    private final StoreRepository storeRepository;
 
     @Autowired
-    StoreRepository storeRepository;
+    public EmployeeController(EmployeeRepository employeeRepository, StoreRepository storeRepository) {
+        this.employeeRepository = employeeRepository;
+        this.storeRepository = storeRepository;
+    }
 
     /**
      * 保存员工
@@ -79,7 +82,7 @@ public class EmployeeController {
         } catch (Exception e) {
             saveEmployeeResponseDto.setMessage(e.getMessage());
             saveEmployeeResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return saveEmployeeResponseDto;
@@ -136,7 +139,7 @@ public class EmployeeController {
         } catch (Exception e) {
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return res;
@@ -157,7 +160,7 @@ public class EmployeeController {
         } catch (Exception e) {
             updateEmployeeResponseDto.setMessage(e.getMessage());
             updateEmployeeResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return updateEmployeeResponseDto;

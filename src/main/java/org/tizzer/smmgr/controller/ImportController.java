@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tizzer.smmgr.common.LogLevel;
-import org.tizzer.smmgr.common.Logcat;
+import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.ImportRecord;
 import org.tizzer.smmgr.entity.ImportSpec;
@@ -39,11 +39,14 @@ import java.util.List;
 @RequestMapping(path = "/smmgr")
 public class ImportController {
 
-    @Autowired
-    ImportRecordRepository importRecordRepository;
+    private final ImportRecordRepository importRecordRepository;
+    private final ImportSpecRepository importSpecRepository;
 
     @Autowired
-    ImportSpecRepository importSpecRepository;
+    public ImportController(ImportRecordRepository importRecordRepository, ImportSpecRepository importSpecRepository) {
+        this.importRecordRepository = importRecordRepository;
+        this.importSpecRepository = importSpecRepository;
+    }
 
     /**
      * 保存进货记录
@@ -76,7 +79,7 @@ public class ImportController {
         } catch (Exception e) {
             saveImportRecordResponseDto.setMessage(e.getMessage());
             saveImportRecordResponseDto.setCode(ResultCode.OK);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return saveImportRecordResponseDto;
@@ -122,7 +125,7 @@ public class ImportController {
         } catch (Exception e) {
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.OK);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return res;
@@ -146,7 +149,7 @@ public class ImportController {
         } catch (Exception e) {
             queryImportSpecResponseDto.setMessage(e.getMessage());
             queryImportSpecResponseDto.setCode(ResultCode.OK);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryImportSpecResponseDto;

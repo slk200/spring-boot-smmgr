@@ -10,7 +10,7 @@ import java.util.Map;
  * @author Tizzer
  * @version 1.0
  */
-public class Logcat {
+public class Log {
 
     /**
      * 日志对象缓存

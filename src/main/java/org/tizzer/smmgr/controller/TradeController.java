@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.RequestContext;
 import org.tizzer.smmgr.common.LogLevel;
-import org.tizzer.smmgr.common.Logcat;
+import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.TradeRecord;
 import org.tizzer.smmgr.entity.TradeSpec;
@@ -41,14 +41,16 @@ import java.util.List;
 @RequestMapping(path = "/smmgr")
 public class TradeController {
 
-    @Autowired
-    PayTypeRepository payTypeRepository;
+    private final PayTypeRepository payTypeRepository;
+    private final TradeRecordRepository tradeRecordRepository;
+    private final TradeSpecRepository tradeSpecRepository;
 
     @Autowired
-    TradeRecordRepository tradeRecordRepository;
-
-    @Autowired
-    TradeSpecRepository tradeSpecRepository;
+    public TradeController(PayTypeRepository payTypeRepository, TradeRecordRepository tradeRecordRepository, TradeSpecRepository tradeSpecRepository) {
+        this.payTypeRepository = payTypeRepository;
+        this.tradeRecordRepository = tradeRecordRepository;
+        this.tradeSpecRepository = tradeSpecRepository;
+    }
 
     /**
      * 查询所有付款类型
@@ -65,7 +67,7 @@ public class TradeController {
         } catch (Exception e) {
             queryPayTypeResponseDto.setMessage(e.getMessage());
             queryPayTypeResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryPayTypeResponseDto;
@@ -117,7 +119,7 @@ public class TradeController {
         } catch (Exception e) {
             saveTradeRecordResponseDto.setMessage(e.getMessage());
             saveTradeRecordResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return saveTradeRecordResponseDto;
@@ -171,7 +173,7 @@ public class TradeController {
         } catch (Exception e) {
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return res;
@@ -198,7 +200,7 @@ public class TradeController {
         } catch (Exception e) {
             queryTradeSpecResponseDto.setMessage(e.getMessage());
             queryTradeSpecResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryTradeSpecResponseDto;
@@ -239,7 +241,7 @@ public class TradeController {
         } catch (Exception e) {
             queryRefundRecordResponseDto.setMessage(e.getMessage());
             queryRefundRecordResponseDto.setCode(ResultCode.ERROR);
-            Logcat.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryRefundRecordResponseDto;
