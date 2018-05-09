@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.RequestContext;
-import org.tizzer.smmgr.common.LogLevel;
 import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.Employee;
@@ -55,7 +54,7 @@ public class LoginController {
         } catch (Exception e) {
             loginResponseDto.setMessage(e.getMessage());
             loginResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return loginResponseDto;

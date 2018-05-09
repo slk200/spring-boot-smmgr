@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tizzer.smmgr.common.LogLevel;
 import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.Store;
@@ -57,7 +56,7 @@ public class StoreController {
         } catch (Exception e) {
             saveStoreResponseDto.setMessage(e.getMessage());
             saveStoreResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return saveStoreResponseDto;
@@ -108,7 +107,7 @@ public class StoreController {
         } catch (Exception e) {
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return res;
@@ -130,7 +129,7 @@ public class StoreController {
         } catch (Exception e) {
             queryOtherStoreResponseDto.setMessage(e.getMessage());
             queryOtherStoreResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryOtherStoreResponseDto;
@@ -155,7 +154,7 @@ public class StoreController {
         } catch (Exception e) {
             queryOneStoreResponseDto.setMessage(e.getMessage());
             queryOneStoreResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryOneStoreResponseDto;
@@ -176,7 +175,7 @@ public class StoreController {
         } catch (Exception e) {
             updateStoreResponseDto.setMessage(e.getMessage());
             updateStoreResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return updateStoreResponseDto;
@@ -200,7 +199,7 @@ public class StoreController {
         } catch (Exception e) {
             deleteStoreResponseDto.setMessage(e.getMessage());
             deleteStoreResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return deleteStoreResponseDto;

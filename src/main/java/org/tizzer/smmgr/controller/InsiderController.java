@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.RequestContext;
-import org.tizzer.smmgr.common.LogLevel;
 import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.Insider;
@@ -62,7 +61,7 @@ public class InsiderController {
         } catch (Exception e) {
             saveInsiderTypeResponseDto.setMessage(e.getMessage());
             saveInsiderTypeResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return saveInsiderTypeResponseDto;
@@ -83,7 +82,7 @@ public class InsiderController {
         } catch (Exception e) {
             queryAllInsiderTypeResponseDto.setMessage(e.getMessage());
             queryAllInsiderTypeResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryAllInsiderTypeResponseDto;
@@ -108,7 +107,7 @@ public class InsiderController {
         } catch (Exception e) {
             updateInsiderTypeResponseDto.setMessage(e.getMessage());
             updateInsiderTypeResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return updateInsiderTypeResponseDto;
@@ -141,7 +140,7 @@ public class InsiderController {
         } catch (Exception e) {
             deleteInsiderTypeResponseDto.setMessage(e.getMessage());
             deleteInsiderTypeResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return deleteInsiderTypeResponseDto;
@@ -184,7 +183,7 @@ public class InsiderController {
         } catch (Exception e) {
             saveInsiderResponseDto.setMessage(e.getMessage());
             saveInsiderResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return saveInsiderResponseDto;
@@ -241,7 +240,7 @@ public class InsiderController {
         } catch (Exception e) {
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return res;
@@ -277,7 +276,7 @@ public class InsiderController {
         } catch (Exception e) {
             queryOneInsiderResponseDto.setMessage(e.getMessage());
             queryOneInsiderResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryOneInsiderResponseDto;
@@ -298,7 +297,7 @@ public class InsiderController {
         } catch (Exception e) {
             updateInsiderResponseDto.setMessage(e.getMessage());
             updateInsiderResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return updateInsiderResponseDto;

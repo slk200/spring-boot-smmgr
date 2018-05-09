@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.RequestContext;
-import org.tizzer.smmgr.common.LogLevel;
 import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.TradeRecord;
@@ -67,7 +66,7 @@ public class TradeController {
         } catch (Exception e) {
             queryPayTypeResponseDto.setMessage(e.getMessage());
             queryPayTypeResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryPayTypeResponseDto;
@@ -119,7 +118,7 @@ public class TradeController {
         } catch (Exception e) {
             saveTradeRecordResponseDto.setMessage(e.getMessage());
             saveTradeRecordResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return saveTradeRecordResponseDto;
@@ -173,7 +172,7 @@ public class TradeController {
         } catch (Exception e) {
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return res;
@@ -200,7 +199,7 @@ public class TradeController {
         } catch (Exception e) {
             queryTradeSpecResponseDto.setMessage(e.getMessage());
             queryTradeSpecResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryTradeSpecResponseDto;
@@ -241,7 +240,7 @@ public class TradeController {
         } catch (Exception e) {
             queryRefundRecordResponseDto.setMessage(e.getMessage());
             queryRefundRecordResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryRefundRecordResponseDto;

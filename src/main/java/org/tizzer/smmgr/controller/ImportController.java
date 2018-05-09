@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tizzer.smmgr.common.LogLevel;
 import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.ImportRecord;
@@ -79,7 +78,7 @@ public class ImportController {
         } catch (Exception e) {
             saveImportRecordResponseDto.setMessage(e.getMessage());
             saveImportRecordResponseDto.setCode(ResultCode.OK);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return saveImportRecordResponseDto;
@@ -125,7 +124,7 @@ public class ImportController {
         } catch (Exception e) {
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.OK);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return res;
@@ -149,7 +148,7 @@ public class ImportController {
         } catch (Exception e) {
             queryImportSpecResponseDto.setMessage(e.getMessage());
             queryImportSpecResponseDto.setCode(ResultCode.OK);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryImportSpecResponseDto;

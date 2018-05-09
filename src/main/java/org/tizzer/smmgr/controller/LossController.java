@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tizzer.smmgr.common.LogLevel;
 import org.tizzer.smmgr.common.Log;
 import org.tizzer.smmgr.constant.ResultCode;
 import org.tizzer.smmgr.entity.LossRecord;
@@ -84,7 +83,7 @@ public class LossController {
         } catch (Exception e) {
             saveLossRecordResponseDto.setMessage(e.getMessage());
             saveLossRecordResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return saveLossRecordResponseDto;
@@ -134,7 +133,7 @@ public class LossController {
         } catch (Exception e) {
             res.setMessage(e.getMessage());
             res.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return res;
@@ -159,7 +158,7 @@ public class LossController {
         } catch (Exception e) {
             queryLossSpecResponseDto.setMessage(e.getMessage());
             queryLossSpecResponseDto.setCode(ResultCode.ERROR);
-            Log.type(getClass(), e.getMessage(), LogLevel.ERROR);
+            Log.type(getClass(), e.getMessage(), Log.LogLevel.ERROR);
             e.printStackTrace();
         }
         return queryLossSpecResponseDto;
