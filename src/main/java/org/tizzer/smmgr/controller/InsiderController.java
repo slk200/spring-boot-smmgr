@@ -174,7 +174,7 @@ public class InsiderController {
                     toSaveInsider.setNote(saveInsiderRequestDto.getNote());
                 }
                 if (saveInsiderRequestDto.getBirth() != null) {
-                    toSaveInsider.setBirth(TimeUtil.string2Day(saveInsiderRequestDto.getBirth()));
+                    toSaveInsider.setBirth(TimeUtil.string2Date(saveInsiderRequestDto.getBirth()));
                 }
                 toSaveInsider.setCreateAt(new Date());
                 insiderRepository.save(toSaveInsider);
@@ -205,10 +205,10 @@ public class InsiderController {
                 public Predicate toPredicate(Root<Insider> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                     List<Predicate> predicates = new ArrayList<>();
                     if (querySomeInsiderRequestDto.getStartDate() != null) {
-                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(querySomeInsiderRequestDto.getStartDate())));
+                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.string2DateTime(querySomeInsiderRequestDto.getStartDate())));
                     }
                     if (querySomeInsiderRequestDto.getEndDate() != null) {
-                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(querySomeInsiderRequestDto.getEndDate())));
+                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.string2DateTime(querySomeInsiderRequestDto.getEndDate())));
                     }
                     if (!querySomeInsiderRequestDto.getKeyword().equals("")) {
                         predicates.add(cb.or(cb.like(root.get("cardNo"), "%" + querySomeInsiderRequestDto.getKeyword() + "%"),

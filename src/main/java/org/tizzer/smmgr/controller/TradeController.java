@@ -144,10 +144,10 @@ public class TradeController {
                         predicates.add(cb.equal(root.get("staffNo"), queryTradeRecordRequestDto.getStaffNo()));
                     }
                     if (queryTradeRecordRequestDto.getStartDate() != null) {
-                        predicates.add(cb.greaterThanOrEqualTo(root.get("soldTime"), TimeUtil.string2Day(queryTradeRecordRequestDto.getStartDate())));
+                        predicates.add(cb.greaterThanOrEqualTo(root.get("soldTime"), TimeUtil.string2DateTime(queryTradeRecordRequestDto.getStartDate())));
                     }
                     if (queryTradeRecordRequestDto.getEndDate() != null) {
-                        predicates.add(cb.lessThanOrEqualTo(root.get("soldTime"), TimeUtil.string2Day(queryTradeRecordRequestDto.getEndDate())));
+                        predicates.add(cb.lessThanOrEqualTo(root.get("soldTime"), TimeUtil.string2DateTime(queryTradeRecordRequestDto.getEndDate())));
                     }
                     if (!queryTradeRecordRequestDto.getKeyword().equals("")) {
                         predicates.add(cb.like(root.get("serialNo"), "%" + queryTradeRecordRequestDto.getKeyword() + "%"));

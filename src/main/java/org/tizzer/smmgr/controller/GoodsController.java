@@ -54,7 +54,7 @@ public class GoodsController {
         try {
             GoodsType goodsType = new GoodsType();
             if (saveGoodsRequestDto.getId() == -1) {
-                goodsType.setName(saveGoodsRequestDto.getName());
+                goodsType.setName(saveGoodsRequestDto.getType());
                 goodsType = goodsTypeRepository.save(goodsType);
             } else {
                 goodsType.setId(saveGoodsRequestDto.getId());
@@ -68,7 +68,7 @@ public class GoodsController {
             goods.setInventory(saveGoodsRequestDto.getInvention());
             goods.setjPrice(saveGoodsRequestDto.getjPrice());
             goods.setsPrice(saveGoodsRequestDto.getsPrice());
-            goods.setScDate(TimeUtil.string2Day(saveGoodsRequestDto.getScDate()));
+            goods.setScDate(TimeUtil.string2DateTime(saveGoodsRequestDto.getScDate()));
             goods.setBzDate(saveGoodsRequestDto.getBzDate());
             goodsRepository.save(goods);
             saveGoodsResponseDto.setCode(ResultCode.OK);

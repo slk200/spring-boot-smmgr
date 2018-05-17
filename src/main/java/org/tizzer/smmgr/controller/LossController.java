@@ -106,10 +106,10 @@ public class LossController {
                 public Predicate toPredicate(Root<LossRecord> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                     List<Predicate> predicates = new ArrayList<>();
                     if (queryLossRecordRequestDto.getStartDate() != null) {
-                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(queryLossRecordRequestDto.getStartDate())));
+                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.string2DateTime(queryLossRecordRequestDto.getStartDate())));
                     }
                     if (queryLossRecordRequestDto.getEndDate() != null) {
-                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(queryLossRecordRequestDto.getEndDate())));
+                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.string2DateTime(queryLossRecordRequestDto.getEndDate())));
                     }
                     if (!queryLossRecordRequestDto.getKeyword().equals("")) {
                         predicates.add(cb.like(root.get("id"), "%" + queryLossRecordRequestDto.getKeyword() + "%"));

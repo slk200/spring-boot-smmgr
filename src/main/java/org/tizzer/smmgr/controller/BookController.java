@@ -101,10 +101,10 @@ public class BookController {
                 public Predicate toPredicate(Root<BookRecord> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                     List<Predicate> predicates = new ArrayList<>();
                     if (queryBookRecordRequestDto.getStartDate() != null) {
-                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(queryBookRecordRequestDto.getStartDate())));
+                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.string2DateTime(queryBookRecordRequestDto.getStartDate())));
                     }
                     if (queryBookRecordRequestDto.getEndDate() != null) {
-                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(queryBookRecordRequestDto.getEndDate())));
+                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.string2DateTime(queryBookRecordRequestDto.getEndDate())));
                     }
                     if (!predicates.isEmpty()) {
                         query.where(predicates.toArray(new Predicate[0]));

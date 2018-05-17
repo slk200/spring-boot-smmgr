@@ -55,7 +55,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping(path = "/save/employee")
-    public SaveEmployeeResponseDto saveEmployee(HttpServletRequest request,SaveEmployeeRequestDto saveEmployeeRequestDto) {
+    public SaveEmployeeResponseDto saveEmployee(HttpServletRequest request, SaveEmployeeRequestDto saveEmployeeRequestDto) {
         RequestContext requestContext = new RequestContext(request);
         SaveEmployeeResponseDto saveEmployeeResponseDto = new SaveEmployeeResponseDto();
         try {
@@ -103,10 +103,10 @@ public class EmployeeController {
                 public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                     List<Predicate> predicates = new ArrayList<>();
                     if (querySomeEmployeeRequestDto.getStartDate() != null) {
-                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(querySomeEmployeeRequestDto.getStartDate())));
+                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.string2DateTime(querySomeEmployeeRequestDto.getStartDate())));
                     }
                     if (querySomeEmployeeRequestDto.getEndDate() != null) {
-                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(querySomeEmployeeRequestDto.getEndDate())));
+                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.string2DateTime(querySomeEmployeeRequestDto.getEndDate())));
                     }
                     if (!querySomeEmployeeRequestDto.getKeyword().equals("")) {
                         predicates.add(cb.or(cb.like(root.get("staffNo"), "%" + querySomeEmployeeRequestDto.getKeyword() + "%"),

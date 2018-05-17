@@ -78,10 +78,10 @@ public class StoreController {
                 public Predicate toPredicate(Root<Store> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                     List<Predicate> predicates = new ArrayList<>();
                     if (queryStoreRequestDto.getStartDate() != null) {
-                        predicates.add(cb.greaterThanOrEqualTo(root.get("foundDate"), TimeUtil.string2Day(queryStoreRequestDto.getStartDate())));
+                        predicates.add(cb.greaterThanOrEqualTo(root.get("foundDate"), TimeUtil.string2DateTime(queryStoreRequestDto.getStartDate())));
                     }
                     if (queryStoreRequestDto.getEndDate() != null) {
-                        predicates.add(cb.lessThanOrEqualTo(root.get("foundDate"), TimeUtil.string2Day(queryStoreRequestDto.getEndDate())));
+                        predicates.add(cb.lessThanOrEqualTo(root.get("foundDate"), TimeUtil.string2DateTime(queryStoreRequestDto.getEndDate())));
                     }
                     if (!queryStoreRequestDto.getKeyword().equals("")) {
                         predicates.add(cb.or(cb.like(root.get("name"), "%" + queryStoreRequestDto.getKeyword() + "%"),

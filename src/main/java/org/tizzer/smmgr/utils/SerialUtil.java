@@ -15,6 +15,7 @@ public class SerialUtil {
 
     /**
      * 获取交易id
+     *
      * @return
      * @throws ExecutionException
      * @throws InterruptedException
@@ -26,6 +27,7 @@ public class SerialUtil {
 
     /**
      * 获取退货id
+     *
      * @return
      * @throws ExecutionException
      * @throws InterruptedException
@@ -37,6 +39,7 @@ public class SerialUtil {
 
     /**
      * 获取报损id
+     *
      * @return
      * @throws ExecutionException
      * @throws InterruptedException

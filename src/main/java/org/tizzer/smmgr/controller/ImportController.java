@@ -101,10 +101,10 @@ public class ImportController {
                 public Predicate toPredicate(Root<ImportRecord> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                     List<Predicate> predicates = new ArrayList<>();
                     if (queryImportRecordRequestDto.getStartDate() != null) {
-                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(queryImportRecordRequestDto.getStartDate())));
+                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.string2DateTime(queryImportRecordRequestDto.getStartDate())));
                     }
                     if (queryImportRecordRequestDto.getEndDate() != null) {
-                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(queryImportRecordRequestDto.getEndDate())));
+                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.string2DateTime(queryImportRecordRequestDto.getEndDate())));
                     }
                     if (!predicates.isEmpty()) {
                         query.where(predicates.toArray(new Predicate[0]));
@@ -144,6 +144,7 @@ public class ImportController {
             List<ImportSpec> transSpecs = importSpecRepository.findAllBySerialNo(queryImportSpecRequestDto.getId());
             queryImportSpecResponseDto.setData(transSpecs);
             queryImportSpecResponseDto.setCost(transRecord.getCost());
+            queryImportSpecResponseDto.setNote(transRecord.getNote());
             queryImportSpecResponseDto.setCode(ResultCode.OK);
         } catch (Exception e) {
             queryImportSpecResponseDto.setMessage(e.getMessage());

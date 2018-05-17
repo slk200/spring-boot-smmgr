@@ -106,10 +106,10 @@ public class TransController {
                 public Predicate toPredicate(Root<TransRecord> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                     List<Predicate> predicates = new ArrayList<>();
                     if (queryTransRecordRequestDto.getStartDate() != null) {
-                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(queryTransRecordRequestDto.getStartDate())));
+                        predicates.add(cb.greaterThanOrEqualTo(root.get("createAt"), TimeUtil.string2DateTime(queryTransRecordRequestDto.getStartDate())));
                     }
                     if (queryTransRecordRequestDto.getEndDate() != null) {
-                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.string2Day(queryTransRecordRequestDto.getEndDate())));
+                        predicates.add(cb.lessThanOrEqualTo(root.get("createAt"), TimeUtil.string2DateTime(queryTransRecordRequestDto.getEndDate())));
                     }
                     if (!predicates.isEmpty()) {
                         query.where(predicates.toArray(new Predicate[0]));
