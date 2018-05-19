@@ -130,7 +130,7 @@ public class TradeController {
      * @param queryTradeRecordRequestDto
      * @return
      */
-    @GetMapping("/query/trade/record")
+    @PostMapping("/query/trade/record")
     public ResultListResponse<QueryTradeRecordResponseDto> queryAllRecord(QueryTradeRecordRequestDto queryTradeRecordRequestDto) {
         ResultListResponse<QueryTradeRecordResponseDto> res = new ResultListResponse<>();
         try {
@@ -212,7 +212,7 @@ public class TradeController {
      * @param queryRefundRecordRequestDto
      * @return
      */
-    @GetMapping("/query/refund/record")
+    @PostMapping("/query/refund/record")
     public QueryRefundRecordResponseDto<TradeSpec> queryRefundRecord(HttpServletRequest request, QueryRefundRecordRequestDto queryRefundRecordRequestDto) {
         RequestContext requestContext = new RequestContext(request);
         QueryRefundRecordResponseDto<TradeSpec> queryRefundRecordResponseDto = new QueryRefundRecordResponseDto<>();

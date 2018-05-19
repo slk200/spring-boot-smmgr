@@ -68,7 +68,7 @@ public class StoreController {
      * @param queryStoreRequestDto
      * @return
      */
-    @GetMapping(path = "/query/store")
+    @PostMapping(path = "/query/store")
     public ResultListResponse<QueryStoreResponseDto> querySomeStore(QueryStoreRequestDto queryStoreRequestDto) {
         ResultListResponse<QueryStoreResponseDto> res = new ResultListResponse<>();
         try {

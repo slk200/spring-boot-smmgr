@@ -195,7 +195,7 @@ public class InsiderController {
      * @param querySomeInsiderRequestDto
      * @return
      */
-    @GetMapping(path = "/query/insider")
+    @PostMapping(path = "/query/insider")
     public ResultListResponse<QuerySomeInsiderResponseDto> querySomeInsider(QuerySomeInsiderRequestDto querySomeInsiderRequestDto) {
         ResultListResponse<QuerySomeInsiderResponseDto> res = new ResultListResponse<>();
         try {
@@ -252,7 +252,7 @@ public class InsiderController {
      * @param queryOneInsiderRequestDto
      * @return
      */
-    @GetMapping(path = "/query/insider/one")
+    @PostMapping(path = "/query/insider/one")
     public QueryOneInsiderResponseDto queryOneInsider(HttpServletRequest request, QueryOneInsiderRequestDto queryOneInsiderRequestDto) {
         RequestContext requestContext = new RequestContext(request);
         QueryOneInsiderResponseDto queryOneInsiderResponseDto = new QueryOneInsiderResponseDto();

@@ -16,3 +16,12 @@ spring:
     view:
       prefix: /
       suffix: .html
+  http:
+    encoding:
+      charset: UTF-8
+      force-request: true
+      force-response: true
+      enabled: true
+server:
+  tomcat:
+    uri-encoding: UTF-8

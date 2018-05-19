@@ -108,7 +108,7 @@ public class GoodsController {
      * @param queryGoodsRequestDto
      * @return
      */
-    @GetMapping(path = "/query/goods")
+    @PostMapping(path = "/query/goods")
     public ResultListResponse<QueryGoodsResponseDto> getSatisfy(QueryGoodsRequestDto queryGoodsRequestDto) {
         ResultListResponse<QueryGoodsResponseDto> res = new ResultListResponse<>();
         try {
@@ -184,7 +184,7 @@ public class GoodsController {
      * @param queryTradeGoodsRequestDto
      * @return
      */
-    @GetMapping(path = "/query/trade/goods")
+    @PostMapping(path = "/query/trade/goods")
     public QueryTradeGoodsResponseDto<Goods> queryTradeGoods(QueryTradeGoodsRequestDto queryTradeGoodsRequestDto) {
         QueryTradeGoodsResponseDto<Goods> queryTradeGoodsResponseDto = new QueryTradeGoodsResponseDto<>();
         try {

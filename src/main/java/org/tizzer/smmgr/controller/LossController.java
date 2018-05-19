@@ -95,7 +95,7 @@ public class LossController {
      * @param queryLossRecordRequestDto
      * @return
      */
-    @GetMapping(path = "/query/loss/record")
+    @PostMapping(path = "/query/loss/record")
     public ResultListResponse<QueryLossRecordResponseDto> queryLossRecord(QueryLossRecordRequestDto queryLossRecordRequestDto) {
         ResultListResponse<QueryLossRecordResponseDto> res = new ResultListResponse<>();
         try {
